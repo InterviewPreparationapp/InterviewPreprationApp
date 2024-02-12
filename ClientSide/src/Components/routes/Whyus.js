@@ -1,23 +1,22 @@
 import "../css/whyus.css"
-import img1 from "../images/img1.png"
+import img1 from "../images/whyus.jpg"
 function Whyus() {
     return (
         <>
-        <h3 style={{textAlign:"center", padding:"20px"}}>Why Us?</h3>
+        <h3 style={{ "font-family": "Protest Riot, sans-serif" , color: "#325b5d",textAlign:"center", padding:"20px"}}>Why Us?</h3>
         <div className="container" id="whyus">
       <div className="left-image">
         <img src={img1} alt="Left Image" />
       </div>
       <div className="right-paragraph">
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-              tempor incididunt ut labore et dolore magna aliqua. Pretium vulputate sapien nec sagittis
-               aliquam malesuada. Viverra maecenas accumsan lacus vel facilisis volutpat est velit egestas
-               . Cursus in hac habitasse platea. Fusce id velit ut tortor pretium. Pellentesque diam volut
-               pat commodo sed egestas egestas. Ornare arcu dui vivamus arcu. Et tortor consequat id porta
-                nibh venenatis cras sed felis. Bibendum ut tristique et egestas quis ipsum suspendisse ultrices. 
-                Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper.
-                        
+        <p style={{ "font-family": "system-ui", fontSize: 20}}>
+        Our platform offers more than just interviews – it's a gateway to knowledge and inspiration.
+ Engage with our community of learners, professionals, and enthusiasts who share your curiosity 
+ and drive for growth. Whether you're seeking career advice, industry expertise, or simply looking to
+  expand your horizons, we're here to fuel your curiosity and empower your journey.
+  Join us at Interview Preparation WebApp and unlock a world of possibilities. Let our interviews be your guide 
+  as you navigate the ever-changing landscape of your industry and beyond. Start your exploration
+  today and elevate your understanding with Interview Preparation WebApp.
         </p>
       </div>
     </div>

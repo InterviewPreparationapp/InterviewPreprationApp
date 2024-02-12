@@ -2,7 +2,8 @@ const mysql=require('mysql2');
 const express  = require('express')
 const config = require('config')
 const app = express.Router();
-
+const jwt = require('jsonwebtoken')
+const config2 = require('../config/configjwt')
 //getting connection details from config file
 var ConnectionDetails ={
                         host:config.get("server"),
@@ -61,39 +62,79 @@ app.post("/register",(request,response)=>{
 //login api
 app.post("/login",(request,response)=>{
    const {Email,Password}= request.body;
-   var statement  = `Select count(*) as count from Users WHERE Email='${Email}' AND Password='${Password}'`;
+   var statement  = `Select Userid,FirstName,Email from Users WHERE Email='${Email}' AND Password='${Password}'`;
     var connection = mysql.createConnection(ConnectionDetails);
-    connection.query(statement,(error,result)=>{
-            if(error==null)
-            {
-               var count = result[0].count;
-               if(count>0)
-               {
-                    response.write("Login Successful");
-                    connection.end();
-                    response.end();
-               }
-               else
-               {
-                response.write("Login Failed !! UserName or Password");
-                connection.end();
-                response.end();
-               }
+    connection.query(statement,(error,users)=>{
+        if (error) {
+            var reply = {
+                "status":"error",
+                "result":error
             }
-            else{
-                response.setHeader("Content-type","application/json");
-                var reply = {
-                    "status":"error",
-                    "message":error
-                }
-                response.write(JSON.stringify(reply));
-                connection.end();
-                response.end();
+            response.send(JSON.stringify(reply))
+          } else {
+            // if there is any user found with email and password
+            if (users.length == 0) {
+              // no user found
+              var reply = {
+                "status":"error",
+                "result":"user not found"
             }
-    }) 
+              response.send(JSON.stringify(reply))
+            } else {
+                console.log(users[0])
+              const user = users[0]
+              console.log(user)
+              // create a payload for jwt token
+              const payload = {
+                Userid:user['Userid'],
+                name: user['FirstName'],
+                type: 'user',
+              }
+      
+              // create a token
+              const token = jwt.sign(payload, config2.secrete)
+              var reply ={
+                "token":token,
+                  "UserName":user['FirstName'],
+                "Userid":user['Userid']
+              }
+              response.send(JSON.stringify(reply))
+              
+            }
+          }
+        })
+      })   
+ 
+    // if(error==null)
+    // {
+       
+    //     const user = result[0]
+    //     console.log(user)
+    //   var count = result[0];
+    //    if(count>0)
+    //    {
+    //         response.write("Login Successful");
+    //         connection.end();
+    //         response.end();
+    //    }
+    //    else
+    //    {
+    //     response.write("Login Failed !! UserName or Password");
+    //     connection.end();
+    //     response.end();
+    //    }
+    // }
+    // else{
+    //     response.setHeader("Content-type","application/json");
+    //     var reply = {
+    //         "status":"error",
+    //         "message":error
+    //     }
+    //     response.write(JSON.stringify(reply));
+    //     connection.end();
+    //     response.end();
+    // }
 
-
-})
 
 
 //get user by id api

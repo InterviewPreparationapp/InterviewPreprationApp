@@ -36,11 +36,16 @@
 .field checkbox {
   margin-right: 5px;
 }
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .LoginBox {
       padding: 10px; /* Decrease padding on small screens */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
 
+  /* .button button {
+    border-image-outset: center;
+
   
+  } */
+  .button {font-size: 100px;}

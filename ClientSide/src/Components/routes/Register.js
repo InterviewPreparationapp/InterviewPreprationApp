@@ -1,422 +1,155 @@
 import "../css/Login.css";
-import { Fragment, useEffect, useState } from "react";
-import "../css/Register.css"
-import axios from "axios";
-
+import { useEffect, useState } from "react";
 function Register() {
 
-    const [FormData,setFormData] = useState({"FirstName":"","LastName":"",
+    const [FormData,setFormData] = useState({"FName":"","LName":"",
                                              "Email":"","Password":"",
-                                             "CnfPassowrd":"","Mobile":"",
-                                             "Address":"","Dob":"",
+                                             "CnfPassowrd":"","MobileNo":"",
+                                             "Address":"","DOB":"",
                                             "Qualification":"","Gender":""
                                             });
 
-    const [Error,setError] = useState(false);                                    
-                                 
+    const [Error,setError] = useState({})
     const [isSubmit,setisSumbit] =useState(false);
-    const [ErrFirstName,setErrFirstName] = useState("");
-    const [ErrLastName,setErrLastName] = useState("");
-    const [ErrEmail,setErrEmail] = useState("");
-    const [ErrPassword,setErrPassword] = useState("");
-    const [ErrCnfPassword,setCnfErrPassword] = useState("");
-    const [ErrMobile,setErrMobile] = useState("");
-    const [ErrAddress,setErrAddress] = useState("");
-    const [ErrDob,setErrDob] = useState("");
-    const [ErrQualification,setErrQualification] = useState("");
-    const [ErrGender,setErrGender] = useState("");
-    //on text change
    const OnTextChange = (args)=>{
         var inputDataCopy = {...FormData};
         inputDataCopy[args.target.name]=args.target.value
-        //console.log(inputDataCopy)
-       // console.log(inputDataCopy)
+        console.log(inputDataCopy)
+        console.log(inputDataCopy)
         setFormData(inputDataCopy)
     }
 
-    const submitReg = (e)=>
-    {
-      e.preventDefault()
-      const input = JSON.stringify(FormData);
-      var copy = {...FormData}      
-      // console.log(validForm())
-      // console.log(validDataForm())
-      if(validForm() && validDataForm())
-      {
-        alert("data is valid"+input)
-        console.log(input)
-        axios.post("http://localhost:9997/user/register",copy).then((result)=>{
-          console.log(result.data);
-          console.log(result.data.status);
-          console.log(result)
-          if(result.data.status=="success")
-          {
-            alert("User Registerd Successfully")
-          }
-          else if (result.data.status=="error")
-          {
-            alert("Email is already used")
-          }
-          else
-          {
-            alert("Something went wrong")
-          }
-        })
-      }
-      else{
-        alert("data is invalid")
-      }
-    }
-    
-    const validForm=()=>{
-      return (
-        ErrFirstName === "" &&
-        ErrLastName === "" &&
-        ErrEmail === "" &&
-        ErrPassword === "" &&
-        ErrCnfPassword === "" &&
-        ErrMobile === "" &&
-        ErrAddress === "" &&
-        ErrDob === "" &&
-        ErrQualification === "" &&
-        ErrGender === ""
-      );
-      
+    const submitReg = (e)=>{
+        e.preventDefault();
+        setError(validate(FormData));
+       setisSumbit(true); 
     }
 
-    const validDataForm=()=>{
-      return (
-        FormData.FirstName !== "" &&
-        FormData.LastName !== "" &&
-        FormData.Email !== ""&&
-        FormData.Password !== "" &&
-        FormData.CnfPassowrd !== "" &&
-        FormData.Mobile !== "" &&
-        FormData.Address !== "" &&
-        FormData.Dob !== "" &&
-        FormData.Qualification !== "" &&
-        FormData.Gender !== ""
-      );
-      
-    }
 
-//validation code
-   const validateField=(event)=>
-   { //debugger;
-    const { name, id, value } = event.target;
-    switch(name)
-    {
-        case 'FirstName':
-          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.FirstName);
-          if(FormData.FirstName=="")
-          {
-            setErrFirstName("First Name Cannot Be Blank")
-          }
-          else if(FormData.FirstName.length<4 &&FormData.FirstName.length<19){
-          setErrFirstName("Name should not less than 4 and not greater than 19")
-          }
-          else if(!isValidInput){
-            setErrFirstName("Name cannot be number or special symbols")
-          }
-          else{
-            setErrFirstName("")
-          }
-        break;
-
-        case 'LastName':
-          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.LastName);
-          if(FormData.LastName=="")
-          {
-            setErrLastName("Last Name Cannot Be Blank")
-          }
-          else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
-            setErrLastName("Name should not less than 4 and not greater than 19")
-          }
-          else if(!isValidLastName){
-            setErrLastName("Name cannot be number or special symbols")
-          }
-          else{
-            setErrLastName("")
-          }
-        break;
-
-        case 'Email':
-          const EmailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(FormData.Email);
-          if(FormData.Email=="")
-          {
-            setErrEmail("Email Cannot Be Blank")
-          }
-          // else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
-          //   setErrEmail("Name should not less than 4 and not greater than 19")
-          // }
-          else if(!EmailRegex){
-            setErrEmail("Email is Invalid")
-          }
-          else{
-            setErrEmail("")
-          }
-        break;
-        
-        case 'Password':
-          if(FormData.Password=="")
-          {
-            setErrPassword("Password Cannot Be Blank")
-          }
-          else{
-            setErrPassword("")
-          }
-          break;
-
-        case 'CnfPassowrd':
-          var notblank =false;
-          if(FormData.CnfPassowrd=="")
-          {
-            notblank = false;
-            setCnfErrPassword("Confirm Password Cannot Be Blank")
-          }
-          else{
-            notblank = true;
-            setCnfErrPassword("")
-          }
-          if(notblank &&FormData.Password == FormData.CnfPassowrd)
-          {
-            setCnfErrPassword("")
-          }
-          else
-          {
-            setCnfErrPassword("Password Not Match")
-          }
-          break;
-          
-        case 'Mobile':
-            if(FormData.Mobile=="")
-          {
-            setErrMobile("Mobile Cannot Be Blank")
-          }
-          else if(parseInt(FormData.Mobile)==NaN)
-          {
-            alert()
-          }
-          else{
-            setErrMobile("")
-          }
-          break;
-         
-        case  'Address':
-          if(FormData.Address=="")
-          {
-            setErrAddress("Address Cannot Be Blank")
-          }
-          else{
-            setErrAddress("")
-          }
-          break;
-        
-        case 'Dob':
-          if(FormData.Dob=="")
-          {
-            setErrDob("Dob Cannot Be Blank")
-          }
-          else{
-            setErrDob("")
-          }
-          break;
-        
-        case  'Qualification':
-          if(FormData.Qualification=="")
-          {
-            setErrQualification("Qualification Cannot Be Blank")
-          }
-          else{
-            setErrQualification("")
-          }
-          break;
-        case 'Gender':
-          if(FormData.Gender=="")
-          {
-            setErrGender("Gender Cannot Be Blank")
-          }
-          else{
-            setErrGender("")
-          }
-          break;
-
-    }
-   }//end of validation code
-
-   //clear data on clear button
     const clearData = ()=>{
         setFormData({
-            FirstName:"",LastName:"",
+            FName:"",LName:"",
             Email:"",Password:"",
-            CnfPassowrd:"",Mobile:"",
-            Address:"",Dob:"",
+            CnfPassowrd:"",MobileNo:"",
+            Address:"",DOB:"",
             Qualification:"",Gender:""
         })
-    } 
+    }                                  
+    useEffect(()=>{
+        console.log(Error)    
+            if(Object.keys(Error).length==0 && isSubmit)
+            console.log(FormData);    
+    },[Error]);
     
+//     const SetMessage=(messageToBeSet)=>{
+//         setmessage(messageToBeSet);
+//         setTimeout(() => {
+//                             setmessage("");
+//                        }, 5000);
+//    }
+
+    const validate=(values)=>{
+        const errors = {}
+        const regex = null;
+        if(values.FName.length==0)
+        {
+            errors.FName = "First Name Cannot Be Empty"
+        }
+        else if(values.LName.length==0)
+        {
+            errors.LName = "Last Name Cannot Be Empty"
+        }
+        else if(values.Email.length==0)
+        {
+            errors.Email = "Email Cannot Be Empty"
+        }
+        else if(values.Password.length==0 )
+        {
+            errors.Password = "Password Cannot Be Empty"
+        }
+        else if(values.CnfPassowrd.length==0)
+        {
+            errors.CnfPassowrd = "Confirm Password Cannot Be Empty"
+        }
+        else if(values.MobileNo.length==0)
+        {
+            errors.MobileNo = "Mobile No. Cannot Be Empty"
+        }
+        else if(values.Address.length==0)
+        {
+            errors.Address = "Address Cannot Be Empty"
+        }
+       else if(!values.DOB)
+        {
+            errors.DOB = "DOB Cannot Be Empty"
+        }
+        else if(values.Qualification.length==0)
+        {
+            errors.Qualification = "Qualification Cannot Be Blank"
+        }
+       else if(values.Gender.length==0)
+        {
+            errors.Gender = "Gender Cannot Be Blank"
+        }
+        
+        return errors;
+    }
     
+
     return ( 
         <center>
             <form  onSubmit={submitReg}>
             <div className="LoginBox">
-                <h2> Register</h2>
+                <h3 style={{"font-family": "Protest Riot, sans-serif",color: "#325b5d",textAlign:"center", padding:"20px"}}> Register</h3>
                 <div>
-                  <input 
-                  className="form-control" 
-                  type="text" 
-                  placeholder="Enter Your First Name" 
-                  value={FormData.FirstName} 
-                  name="FirstName" 
-                  onChange={OnTextChange}
-                  onBlur={validateField}
-                  minlength="4"
-                  maxlength="18"
-                  required>
-                  </input>
-                  <span>{ErrFirstName}</span>
-                  <br/>
+                  <input type="text" placeholder="Enter Your First Name" value={FormData.FName} name="FName" onChange={OnTextChange}></input>
+                  {Error.FName && <div style={{color:"red"}}> {Error.FName}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="text" 
-                  placeholder="Enter Your Last Name"
-                  value={FormData.LastName}
-                  name="LastName" 
-                  minlength="4"
-                  maxlength="18"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrLastName}</span>
-                  <br/>
+                  <input type="text" placeholder="Enter Your Last Name" value={FormData.LName} name="LName" onChange={OnTextChange}></input>
+                  {Error.LName && <div style={{color:"red"}}> {Error.LName}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="Email"
-                  placeholder="Enter Your Email"
-                  value={FormData.Email}
-                  name="Email"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrEmail}</span>
-                  <br/>
+                  <input type="text" placeholder="Enter Your Email" value={FormData.Email} name="Email" onChange={OnTextChange}></input>
+                  {Error.Email && <div style={{color:"red"}}> {Error.Email}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="Password"
-                  placeholder="Enter Password"
-                  value={FormData.Password}
-                  name="Password"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrPassword}</span>
-                  <br/>
+                  <input type="text" placeholder="Enter Password" value={FormData.Password} name="Password" onChange={OnTextChange}></input>
+                  {Error.Password && <div style={{color:"red"}}> {Error.Password}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Confirm Password"
-                  value={FormData.CnfPassowrd}
-                  name="CnfPassowrd"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrCnfPassword}</span>
-                  <br/>
+                  <input type="text" placeholder="Confirm Password" value={FormData.CnfPassowrd} name="CnfPassowrd" onChange={OnTextChange}></input>
+                  {Error.CnfPassowrd && <div style={{color:"red"}}> {Error.CnfPassowrd}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="text"
-                  placeholder="Enter Mobile No."
-                  value={FormData.Mobile}
-                  name="Mobile"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}
-                  minlength="10"
-                  maxlength="10">
-                  
-                  </input>
-                  <span>{ErrMobile}</span>
-                  <br/>
+                  <input type="text" placeholder="Enter Mobile No." value={FormData.MobileNo} name="MobileNo" onChange={OnTextChange}></input>
+                  {Error.MobileNo && <div style={{color:"red"}}> {Error.MobileNo}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="text" 
-                  placeholder="Enter Your Address" 
-                  value={FormData.Address} 
-                  name="Address" 
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrAddress}</span>
-                  
+                  <input type="text" placeholder="Enter Your Address" value={FormData.Address} name="Address" onChange={OnTextChange}></input>
+                  {Error.Address && <div style={{color:"red"}}> {Error.Address}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  className="form-control"
-                  type="date"
-                  placeholder="Enter Your D.O.B.>"
-                  value={FormData.Dob}
-                  name="Dob"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrDob}</span>
-                  
+                  <input type="date" placeholder="Enter Your D.O.B.>" value={FormData.DOB} name="DOB" onChange={OnTextChange}></input>
+                  {Error.DOB && <div style={{color:"red"}}> {Error.DOB}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                  <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter Highest Qualification"
-                  value={FormData.Qualification}
-                  name="Qualification"
-                  required
-                  onBlur={validateField}
-                  onChange={OnTextChange}>
-                  </input>
-                  <span>{ErrQualification}</span>
-                  
+                  <input type="text" placeholder="Enter Highest Qualification" value={FormData.Qualification} name="Qualification" onChange={OnTextChange}></input>
+                  {Error.Qualification && <div style={{color:"red"}}> {Error.Qualification}</div>}
+                  <br/><br/>
                 </div>
-
                 <div>
-                <select id="gender" 
-                name="Gender"
-                className="form-select"
-                placeholder="Select Gender"
-                value={FormData.Gender}
-                onBlur={validateField}
-                onChange={OnTextChange}>
-                  <option value="" disabled selected>Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                <span>{ErrGender}</span>
+                  <input type="option" placeholder="Select Gender" value={FormData.Gender} name="Gender" onChange={OnTextChange}></input>
+                  {Error.Gender && <div style={{color:"red"}}> {Error.Gender}</div>}
+                  <br/><br/>
                 </div>
                 <div>
                   <input type="Submit" value="Submit" onClick={submitReg}></input>
@@ -427,9 +160,10 @@ function Register() {
                 
             </div>
             </form>
-
-            
-
+            {/* <div className='alert alert-success' 
+                            style={{color: "black"}}>
+                             {message}
+            </div> */}
         </center>
         
      );

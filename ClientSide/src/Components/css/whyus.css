@@ -1,7 +1,7 @@
 
 .container {
     display: flex;
-    max-width: 800px; /* Adjust the maximum width as needed */
+    max-width: 300px; /* Adjust the maximum width as needed */
     margin: auto; /* Center the container horizontally */
   }
   
@@ -13,9 +13,10 @@
   }
   
   .left-image img {
-    max-width: 100%;
+    max-width: 70%;
     height: auto; /* Maintain aspect ratio */
-    size: 500px;
+    size: 400px;
+    padding : 20px;
   }
   .right-paragraph {
     flex: 2; /* Take up 2/3 of the container width */

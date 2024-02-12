@@ -6,7 +6,6 @@ import Contact from "./Components/routes/Contact";
 import Login from "./Components/routes/Login";
 import Register from "./Components/routes/Register";
 import Experts from './Components/routes/Experts';
-import ForgetPassword from "./Components/routes/ForgetPassword";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Footer from "./Components/Footer";
 
@@ -23,7 +22,6 @@ function App() {
             <Route exact path="/about"  component={About}/>
             <Route exact path="/contact"  component={Contact}/>
             <Route exact path="/register"  component={Register}/> 
-            <Route exact path="/forgetpassword" component={ForgetPassword}/>
         </Switch>
         <Footer/>
     </div>
