@@ -32,14 +32,14 @@ app.use((request, response, next) => {
         next();
     } else {
         const token = request.headers['token'];
-        console.log(`token: ${token}`);
+        //console.log(`token: ${token}`);
         if (!token) {
             response.status(401).json({ error: 'Missing token' });
         } else {
             try {
                 // try validating token
                 const payload = jwt.verify(token, config2.secrete);
-                console.log(payload);
+               // console.log(payload);
 
                 // add the payload details to the request
                 request.user = {
