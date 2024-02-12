@@ -1,7 +1,7 @@
 /* DemoQuestion.css */
 
 .demo-question-container {
-    max-width: 600px;
+    max-width: 900px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ddd;
@@ -9,28 +9,7 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  .options-container {
-    margin-top: 20px;
-  }
   
-  .option-label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .submit-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
   
   /* Add more styling as needed */
   

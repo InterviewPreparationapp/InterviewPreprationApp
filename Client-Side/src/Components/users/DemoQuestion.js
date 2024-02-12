@@ -22,13 +22,9 @@ const DemoQuestion = ({ question, options, onSubmit }) => {
     <>
         <Navbar/>
         <div className="demo-question-container">
-      <h2>{question}</h2>
-      <div className="options-container">
-        
-      </div>
-      
-    </div>
-    
+
+            
+        </div>
     </>
   );
 };

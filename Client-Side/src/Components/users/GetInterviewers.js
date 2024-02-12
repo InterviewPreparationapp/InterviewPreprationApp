@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import Navbar from "../users/Navbar1";
+import { Link } from "react-router-dom";
 import { getCurrentUser, myheaders } from "../routes/auth";
 
 function GetInterviewers() {
@@ -15,7 +16,7 @@ function GetInterviewers() {
     }, []);
 
     const renderInterviewers = () => {
-        return interviewers.map((interviewer,index) => (
+        return interviewers.map((interviewer) => (
             <div className="card" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewerid}>
                 <img src="..." className="card-img-top" alt="..." />
                 <div className="card-body">
@@ -28,7 +29,7 @@ function GetInterviewers() {
                     <li className="list-group-item">{interviewer.QualifiedDegree}</li>
                 </ul>
                 <div className="card-body">
-                    <a href="#" className="card-link">Schedule Interview</a>
+                   <Link to="/login/user/scheduleInterview">Schedule Interview</Link> <br/><br/>
                     <a href="#" className="card-link">Check Feedbacks</a>
                 </div>
             </div>
