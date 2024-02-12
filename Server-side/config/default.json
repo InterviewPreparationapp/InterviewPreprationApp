@@ -1,0 +1,7 @@
+{
+    "server" :"localhost",
+    "database":"InterviewApp",
+    "user":"W2_80692_Aniket",
+    "password":"Aniket",
+    "port":9997
+}
