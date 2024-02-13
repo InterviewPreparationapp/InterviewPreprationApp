@@ -63,7 +63,7 @@ app.post("/login",(request,response)=>{
             } else {
                 console.log(users[0])
               const user = users[0]
-              console.log(user)
+             // console.log(user)
               // create a payload for jwt token
               const payload = {
                 Userid:user['Interviewerid'],
@@ -74,6 +74,7 @@ app.post("/login",(request,response)=>{
               // create a token
               const token = jwt.sign(payload, config2.secrete)
               var reply ={
+                "status":"success",
                 "token":token,
                   "InterviewerName":user['FirstName'],
                 "Interviewerid":user['Interviewerid']
