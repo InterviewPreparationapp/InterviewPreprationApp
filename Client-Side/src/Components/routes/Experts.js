@@ -4,7 +4,7 @@ import "../css/Experts.css"
 import Expert1Image from '../images/Expert1.jpg'; // Import image for Expert 1
 import Expert2Image from '../images/Expert2.jpg'; // Import image for Expert 2
 import Expert3Image from '../images/Expert3.jpg'; 
-
+import { Link } from "react-router-dom";
 
 function Experts
 () {
@@ -36,19 +36,11 @@ function Experts
               <br/>
               <p>"Meet Alexa Demie, our Data Scientist leveraging machine learning and statistical analysis to drive actionable insights." </p>
             </li>
-        
-
-
-                {/* <li>
-                    <img src={Expert2Image} alt="Expert 2" />
-                    <p>Expert 2</p>
-                </li>
-                <li>
-                    <img src={Expert3Image} alt="Expert 3" />
-                    <p>Expert 3</p>
-                </li> */}
-                {/* Add more experts as needed */}
+            
             </ul>
+            <button><Link to="/ourexperts/register">Join Us for Taking Interviews</Link> </button><br/><br/>
+            <button><Link to="/ourexperts/login">Interviewer Login</Link></button>
+            
         </div>
         <Footer/>
         </>

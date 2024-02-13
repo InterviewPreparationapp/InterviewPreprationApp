@@ -16,6 +16,8 @@ import Profile from "./Components/users/Profile";
 import DemoQuestion from "./Components/users/DemoQuestion";
 import { Route, Routes } from "react-router-dom";
 import Footer from "./Components/Footer";
+import IntRegister from "./Components/Interviewer/IntRegister";
+import IntLogin from "./Components/Interviewer/IntLogin";
 
 function App() {
     const token = sessionStorage['token']
@@ -45,6 +47,9 @@ function App() {
                             <Route  path="logout"  element={<PrivateRoute/>}/>
                         </Route>
                         <Route  path="/logout"  element={<Login/>}/>
+                        <Route path="/ourexperts/register" element={<IntRegister/>}/>
+                        <Route path="/ourexperts/login" element={<IntLogin/>}/>
+                        
                 </Routes>
         
         

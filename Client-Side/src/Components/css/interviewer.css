@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+
+.register-box {
+    width: 100%; /*Take full width on small screens */
+    max-width: 600px; /* Set a maximum width for larger screens */
+    margin: 100px auto 10px;  /* Center the box horizontally */
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(217, 211, 201);
+    box-sizing: border-box; /* Use border-box to include padding in width and height */
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1); /* Horizontal offset, vertical offset, blur radius, color */
+
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    color: #555;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #ffc005;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffdfbc;
+}
+
+nav a {
+    color: #ffffff; /* Default color */
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  
+  /* Hover styles */
+  nav a:hover {
+    color: #ff00f7; /* Hover color */
+  }

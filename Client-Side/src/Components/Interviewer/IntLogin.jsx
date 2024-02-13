@@ -1,12 +1,12 @@
 import "../css/Login.css";
-import "bootstrap/dist/css/bootstrap.min.css"
+import "../css/interviewer.css"
 import { useState } from "react";
 import axios from "axios";
 import Navbar from "../Navbar";
 import { Link, useNavigate} from "react-router-dom";
 import Footer from "../Footer";
-import { doLogin } from "./auth";
-function Login() {
+import { doLogin } from "../routes/auth";
+function IntLogin() {
 
     const [credentials,setcredentials] = useState({"Email":"","Password":""});
     const [isChecked,setIsChecked] = useState(false)
@@ -28,7 +28,7 @@ function Login() {
     //alert(credentials.Email+"  "+credentials.Password+"  "+isChecked)
     var copyofInput = {...credentials}
     try{
-        axios.post("http://localhost:9997/user/login",copyofInput).then((result)=>{
+        axios.post("http://127.0.0.1:9997/interviewer/login",copyofInput).then((result)=>{
           //console.log(result.data);
           //console.log(result.data.status);
           if(result.data.status=="success")
@@ -50,6 +50,7 @@ function Login() {
     catch(ex)
     {
         alert("Something Went wrong")
+        console.log(ex)
     }
    } 
 
@@ -64,9 +65,9 @@ function Login() {
           <center>
            <h1> Login</h1>
                 <form className="">
-                <div className="LoginBox">
+                <div className="register-box">
                     <div className="field">
-                        <h2>Candidate</h2>
+                        <h2>Interviewer</h2>
                             <div className="">
                                 <input type="text"
                                 placeholder="Enter Your Email"
@@ -99,7 +100,7 @@ function Login() {
 
                             <div className="form-group">
                             <button onClick={onLogin} className="maroon-button">Login</button> <br/> <br/>
-                            <Link to="/register">Register Here</Link>
+                            <Link to="/ourexperts/register">Register Here</Link>
                             <br/> <br/>
                             <Link to="/forgetpassword">Forget Password</Link>
                             </div>                    
@@ -114,15 +115,4 @@ function Login() {
     );
 }
 
-export default Login;
-
-{/* <input type="text" placeholder="Enter Your Email" value={credentials.Email} name="Email" onChange={OnTextChange}/>
-                    <br/> <br/> 
-                    <input type="text" placeholder="Enter Your Password" value={credentials.Password} name="Password" onChange={OnTextChange}/>
-                    <br/> <br/> 
-                    <input type="checkbox" id="remember" name="remember"/>
-                    <label for="remember"> Remember me</label>
-                    <br/> <br/>
-                    <button>Login</button>
-                    <br/> <br/>
-                    <a href="#">Forgot your password?</a> */}
+export default IntLogin;
