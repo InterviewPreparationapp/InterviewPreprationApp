@@ -35,7 +35,7 @@ function IntLogin() {
           {
             alert("User Login Successfully ")
            doLogin(result.data)
-            navigate("user/dashboard")
+            navigate("interviewer/dashboard")
           }
           else if (result.data.status=="error")
           {

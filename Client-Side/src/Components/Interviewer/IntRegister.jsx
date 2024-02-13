@@ -9,8 +9,8 @@ function IntRegister() {
                                              Email:"",Password:"",
                                              CnfPassowrd:"",Mobile:"",
                                              Address:"",Dob:"",
-                                            Qualification:"",Gender:"",
-                                            CompanyPosition:"",
+                                            Qualification:"",
+                                            CompanyPosition:"",Gender:""
                                             });
 
     const [Error,setError] = useState(false);                                                                
@@ -55,7 +55,7 @@ function IntRegister() {
           //console.log(result)
           if(result.data.status=="success")
           {
-            alert("User Registerd Successfully")
+            alert("Interviewers Registered Successfully")
            navigate("/ourexperts/login")
           }
           else if (result.data.status=="error")
