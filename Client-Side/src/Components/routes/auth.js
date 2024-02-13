@@ -28,16 +28,27 @@ export const getCurrentUser=()=>{
     if(isLoggedIn)
     {
         const UserData = sessionStorage['Userdata']
-        const token = sessionStorage['data']
+        //const token = sessionStorage['data']
         const Userdetails=  JSON.parse(window.atob(UserData))
-        //console.log(Userdetails)
+        console.log(Userdetails)
         return  Userdetails
     }
     else{
         return false;
     }
 }
-
+export const getCurrentUserid=()=>{
+    if(isLoggedIn)
+    {
+        const UserData = sessionStorage['Userdata']
+        const Userdetails=  JSON.parse(window.atob(UserData))
+        //console.log(Userdetails)
+        return  Userdetails.Userid
+    }
+    else{
+        return false;
+    }
+}
 export const myheaders=()=>{
     if(isLoggedIn)
     {

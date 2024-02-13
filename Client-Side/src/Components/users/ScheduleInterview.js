@@ -1,6 +1,6 @@
 import Navbar from "../users/Navbar1";
 import "../css/Sceduleinterview.css"
-import { getCurrentUser, myheaders } from "../routes/auth";
+import { getCurrentUserid,getCurrentUser, myheaders } from "../routes/auth";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css"
 
 function ScheduleInterview() {
     const [interviewers, setInterviewers] = useState([]);
-    const [selectedDate,setSelectedDate] = useState(null)
+    const [scheduled,setScheduled] = useState([])
     const [FormData,setFormData] = useState({Date:"",Title:"",InterviewerSelection:""})
    // const [title,setTitle] = useState("")
     //const [selectinterviewer,setselectedinterviewer] = useState("")
@@ -19,11 +19,41 @@ function ScheduleInterview() {
         axios.get("http://localhost:9997/interview/allInterviewer", { headers })
             .then(res => setInterviewers(res.data.result))
             .catch(err => console.log(err));
-
-
+            
+            // axios.get("http://localhost:9997/interview/getmyinterviews", { headers })
+            // .then(res =>console.log(res.data))
+            // .catch(err => console.log(err));
             
     }, []);
 
+    useEffect(() => {
+        const token = myheaders();  
+           const id = getCurrentUserid();
+           const apiurl = `http://localhost:9997/interview/getmyinterviews/${id}`
+            //console.log(apiurl)
+          //console.log(headers)
+          axios.get(apiurl, {headers: token})
+           .then((result)=>{
+           // console.log(result.data);
+            //console.log(result.data.result);
+            if(result.data.status=="success")
+            {
+                const arr =result.data.result
+                setScheduled(arr)
+                //console.log(arr)
+            }
+            else if (result.data.status=="error")
+            {
+              alert("Some Problem Occured")
+            }
+            else
+            {
+              alert("Something went wrong")
+            }
+      })
+            .catch(err => console.error(err));
+            
+    }, []);
    
     
     const OnTextChange = (args)=>{
@@ -45,35 +75,61 @@ function ScheduleInterview() {
         })
     }
     const handleSave = (e)=>{
-    e.preventDefault();
+        e.preventDefault();
     if(!FormData.Date || !FormData.Title || !FormData.InterviewerSelection){
+       
         alert("All Field is mandatory")
     }
     else{
         //console.log(FormData)
         const sqlFormattedDate = FormData.Date.toJSON().slice(0, 19).replace("T", " ");
-        const data = getCurrentUser()
+        const data = getCurrentUserid()
         const headers = myheaders();
         const requestBody = {
             Date:sqlFormattedDate,
             Title: FormData.Title,
             Interviewerid: FormData.InterviewerSelection,
-            Userid:data.Userid
+            Userid:data
           };
         const url ="http://localhost:9997/interview/setInteview" ;
           console.log(requestBody)
-        axios.post(url,requestBody ,{ headers })
-             .then(res => console.log(res))
+        try{
+            axios.post(url,requestBody ,{ headers })
+             .then((result)=>{
+                //console.log(result.data);
+                //console.log(result.data.status);
+                if(result.data.status=="success")
+                {
+                  alert("Interview scheduled ..")
+                }
+                else if (result.data.status=="error")
+                {
+                  alert("Some Problem Occured")
+                }
+                else
+                {
+                  alert("Something went wrong")
+                }
+          })
             .catch(err => console.log(err));
+        }catch(ex)
+        {
+            alert("Something went wrong")
+            console.log(ex)
+        }
   
     }
     
     }
 
     const gettinginterviewer=()=>{
-        console.log(FormData.Date);
+        const dateObject = new Date(scheduled[0].Date.toLocaleString());
+
+        console.log(scheduled[0].Date.toLocaleString());
+        console.log(dateObject)
         // const sqlFormattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
         // console.log(sqlFormattedDate);
+        
         
     }
 
@@ -82,17 +138,29 @@ function ScheduleInterview() {
                 <option value={item.Interviewerid}>{item.FirstName} {item.LastName}</option>       
         ));
       };
-
+      const renderSceduled = () => {
+        return scheduled.map(item => (
+            <div class="icard">
+            <h3>{item.Title}</h3>
+            <p>{item.Date}</p>
+            <p>{item.Status}</p>
+        </div>       
+        ));
+      };
 
     return ( 
         <>
-        <Navbar/>
-        <h2 className="text-center">Sceduling Interview</h2> 
+        <Navbar/> 
         <button onClick={gettinginterviewer}>get</button>
+        {/* card for viewing interview sceduled and approved or not */}
+        <div className="card-container">
+            {scheduled.length>0&& renderSceduled()}
+        </div>
         <form className="container" onSubmit={handleSave}>
         <div className="container-form">
       
       <form>
+        <h2 className="text-center">Sceduling Interview</h2>
         <div className="form-group">
           <label htmlFor="date">Date:</label>
           <DatePicker
