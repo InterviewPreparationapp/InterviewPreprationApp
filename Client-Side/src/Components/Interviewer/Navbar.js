@@ -29,27 +29,27 @@ const Navbar = () => {
           <ul id="navbar" className={clicked ? '#navbar active' : '#navbar'}>
             <li>
               {' '}
-              <Link to="ourexperts/login/interviewer/dashboard">Dashboard</Link>
+              <Link to="/ourexperts/login/interviewer/dashboard">Dashboard</Link>
             </li>
             <li>
               {' '}
-              <Link to="/login/interviewer/scheduledInterview">Scheduled Interview</Link>
+              <Link to="/ourexperts/login/interviewer/scheduledinterviews">Scheduled Interview</Link>
             </li>
             <li>
               {' '}
-              <Link to="/login/interviewer/pastinterviews">Past Interviews</Link>
+              <Link to="/ourexperts/login/interviewer/pastinterview">Past Interviews</Link>
             </li>
             <li>
               {' '}
-              <Link to="/login/interviewer/interviewrecords">Interview Records</Link>
+              <Link to="/ourexperts/login/interviewer/interviewrecords">Interview Records</Link>
             </li>
             <li>
               {' '}
-              <Link to="/login/interviewer/profile">Profile</Link>
+              <Link to="/ourexperts/login/interviewer/profiles">Profile</Link>
             </li>
             <li>
               {' '}
-              <Link to="/login" onClick={doLogout}>
+              <Link to="/ourexperts" onClick={doLogout}>
                 Logout
               </Link>
             </li>

@@ -20,6 +20,10 @@ import IntRegister from "./Components/Interviewer/IntRegister";
 import IntLogin from "./Components/Interviewer/IntLogin";
 import Dashboard1 from "./Components/Interviewer/Dashboard1";
 import PrivateRouteI from "./Components/Interviewer/PrivateRouteI";
+import PastInterview from "./Components/Interviewer/PastInterview";
+import ScheduledInterview from "./Components/Interviewer/ScheduledInterview";
+import InterviewRecords from "./Components/Interviewer/InterviewRecords";
+import ProfileI from "./Components/Interviewer/ProfileI";
 
 function App() {
     const token = sessionStorage['token']
@@ -50,6 +54,10 @@ function App() {
                         </Route>
                         <Route path="ourexperts/login/interviewer" element={<PrivateRoute/>}>
                             <Route path="dashboard" element={<Dashboard1/>}/>
+                            <Route path="scheduledinterviews" element={<ScheduledInterview/>}/>
+                            <Route path="pastinterview" element={<PastInterview/>}/>
+                            <Route path="interviewrecords" element={<InterviewRecords/>}/>
+                            <Route path="profiles" element={<ProfileI/>}/>
                             <Route path="logout" element={<PrivateRouteI/>}/>
                         </Route>
                         <Route  path="/logout"  element={<Login/>}/>
