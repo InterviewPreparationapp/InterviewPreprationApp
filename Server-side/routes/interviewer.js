@@ -61,7 +61,7 @@ app.post("/login",(request,response)=>{
             }
               response.send(JSON.stringify(reply))
             } else {
-                console.log(users[0])
+                //console.log(users[0])
               const user = users[0]
              // console.log(user)
               // create a payload for jwt token
@@ -232,7 +232,7 @@ app.delete("/delete/:id",(request,response)=>{
 app.get("/InterviewSceduled/:id",(request,response)=>{
     const id = request.params.id;
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement =`select Interviewid,Date,Title,Userid from InterviewSceduled where Interviewerid=${id} `;
+    var statement =`select Interviewid,Date,Title,Userid,Status from InterviewSceduled where Interviewerid=${id} `;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {

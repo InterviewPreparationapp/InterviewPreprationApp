@@ -41,7 +41,7 @@ app.get("/allInterviewer",(request,response)=>{
 app.post("/setInteview",(request,response)=>{
     const {Date,Title,Interviewerid,Userid} = request.body;
    var connection = mysql.createConnection(ConnectionDetails);
-    var statement =`Insert Into InterviewSceduled (Date,Title,Interviewerid,Userid) values('${Date}','${Title}',${Interviewerid},${Userid});`;
+    var statement =`Insert Into InterviewSceduled (Date,Title,Interviewerid,Userid,Status) values('${Date}','${Title}',${Interviewerid},${Userid},'pending');`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
@@ -63,6 +63,37 @@ app.post("/setInteview",(request,response)=>{
     })
 
 })
+
+
+//sending user interview sceduled details
+app.get("/getmyinterviews/:id",(request,response)=>{
+    const id = request.params.id;
+   // console.log(id)
+   var connection = mysql.createConnection(ConnectionDetails);
+    var statement =`select Title,Date,Interviewerid,Status from InterviewSceduled where Userid = ${id};`;
+   // console.log(statement)
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+                response.setHeader("Content-type","application/json");
+                response.write(JSON.stringify(error));
+                connection.end();
+                response.end();
+        }
+    })
+
+})
+
 
 //demo questions for students
 app.get("/demoquestions",(request,response)=>{
