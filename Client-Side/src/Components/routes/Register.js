@@ -433,6 +433,12 @@ function Register() {
                 </select>
                 <span>{ErrGender}</span>
                 </div>
+
+                <div>
+                  <label>Enter Profile photo</label>
+                    <input type="file"></input>
+                </div>
+
                 <div>
                   <input type="Submit" value="Submit" onClick={submitReg}></input>
                   {"  "}{"  "}{"    "}

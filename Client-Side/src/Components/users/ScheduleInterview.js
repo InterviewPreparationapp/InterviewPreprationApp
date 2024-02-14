@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
+import { Carousel, Card } from 'react-bootstrap';
 
 function ScheduleInterview() {
     const [interviewers, setInterviewers] = useState([]);
@@ -39,6 +40,7 @@ function ScheduleInterview() {
             if(result.data.status=="success")
             {
                 const arr =result.data.result
+                //console.log(arr)
                 setScheduled(arr)
                 //console.log(arr)
             }
@@ -75,9 +77,8 @@ function ScheduleInterview() {
         })
     }
     const handleSave = (e)=>{
-        e.preventDefault();
     if(!FormData.Date || !FormData.Title || !FormData.InterviewerSelection){
-       
+      e.preventDefault();
         alert("All Field is mandatory")
     }
     else{
@@ -133,6 +134,14 @@ function ScheduleInterview() {
         
     }
 
+    const gettinginterviewDate=(Date)=>{
+      const dateObject = new Date(Date.toLocaleString());
+        console.log(dateObject)
+      //console.log(scheduled[0].Date.toLocaleString());
+      //console.log(dateObject)
+      // const sqlFormattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
+      // console.log(sqlFormattedDate);   
+  }
     const renderInterviewers = () => {
         return interviewers.map(item => (
                 <option value={item.Interviewerid}>{item.FirstName} {item.LastName}</option>       
@@ -141,11 +150,22 @@ function ScheduleInterview() {
       const renderSceduled = () => {
         return scheduled.map(item => (
             <div class="icard">
-            <h3>{item.Title}</h3>
-            <p>{item.Date}</p>
-            <p>{item.Status}</p>
-        </div>       
+              <p> Title:-<strong>{item.Title}</strong></p>
+              <p>Date:-{item.Date}</p>
+              <p style={getStatusStyle(item)}>{item.Status}</p>
+            </div>       
         ));
+      };
+
+      const getStatusStyle = (item) => {
+        if (item.Status === 'pending') {
+          return { color: 'red' };
+        } else if (item.Status === 'approved') {
+          return { color: 'green' };
+        } else {
+          // Add a default style if neither pending nor approved
+          return { color: 'black' };
+        }
       };
 
     return ( 

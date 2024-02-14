@@ -78,7 +78,7 @@ function IntLogin() {
                             </div>
                             
                             <div className="">
-                                <input type="text"
+                                <input type="password"
                                 placeholder="Enter Your Password"
                                 value={credentials.Password} 
                                 name="Password" 

@@ -9,7 +9,7 @@ function IntRegister() {
                                              Email:"",Password:"",
                                              CnfPassowrd:"",Mobile:"",
                                              Address:"",Dob:"",
-                                            Qualification:"",
+                                            QualifiedDegree:"",
                                             CompanyPosition:"",Gender:""
                                             });
 
@@ -23,7 +23,7 @@ function IntRegister() {
     const [ErrMobile,setErrMobile] = useState("");
     const [ErrAddress,setErrAddress] = useState("");
     const [ErrDob,setErrDob] = useState("");
-    const [ErrQualification,setErrQualification] = useState("");
+    const [ErrQualifiedDegree,setErrQualifiedDegree] = useState("");
     const [ErrGender,setErrGender] = useState("");
     const [ErrCompany,setErrCompany] = useState("");
 
@@ -83,7 +83,7 @@ function IntRegister() {
         ErrMobile === "" &&
         ErrAddress === "" &&
         ErrDob === "" &&
-        ErrQualification === "" &&
+        ErrQualifiedDegree === "" &&
         ErrGender === "" && ErrCompany === ""
       );
       
@@ -99,7 +99,7 @@ function IntRegister() {
         FormData.Mobile !== "" &&
         FormData.Address !== "" &&
         FormData.Dob !== "" &&
-        FormData.Qualification !== "" &&
+        FormData.QualifiedDegree !== "" &&
         FormData.Gender !== "" && FormData.CompanyPosition !==""
       );
       
@@ -227,13 +227,13 @@ function IntRegister() {
           }
           break;
         
-        case  'Qualification':
-          if(FormData.Qualification=="")
+        case  'QualifiedDegree':
+          if(FormData.QualifiedDegree=="")
           {
-            setErrQualification("Qualification Cannot Be Blank")
+            setErrQualifiedDegree("QualifiedDegree Cannot Be Blank")
           }
           else{
-            setErrQualification("")
+            setErrQualifiedDegree("")
           }
           break;
         case 'Gender':
@@ -266,7 +266,7 @@ function IntRegister() {
             Email:"",Password:"",
             CnfPassowrd:"",Mobile:"",
             Address:"",Dob:"",
-            Qualification:"",Gender:""
+            QualifiedDegree:"",Gender:""
         })
     } 
     
@@ -437,19 +437,19 @@ function IntRegister() {
                 </div>
 
                 <div>
-                <label htmlFor="Qualification">Highest Qualification:</label>
+                <label htmlFor="QualifiedDegree">Highest QualifiedDegree:</label>
                   <input
-                  id="Qualification"
+                  id="QualifiedDegree"
                   type="text"
                   className="form-control"
                   placeholder="Eg@B.Tech/B.Sc"
-                  value={FormData.Qualification}
-                  name="Qualification"
+                  value={FormData.QualifiedDegree}
+                  name="QualifiedDegree"
                   required
                   onBlur={validateField}
                   onChange={OnTextChange}>
                   </input>
-                  <span>{ErrQualification}</span>
+                  <span>{ErrQualifiedDegree}</span>
                   
                 </div>
 
