@@ -281,7 +281,35 @@ app.get("/UsersDetails/:id",(request,response)=>{
 
     })
 });
-
+app.patch("/updatestatus/:id",(request,response)=>{
+    const Interviewid = request.params.id
+        var connection = mysql.createConnection(ConnectionDetails);
+        var statement = `Update InterviewSceduled set Status = 'approved' where Interviewid =  ${Interviewid};`;
+        console.log(statement)
+        connection.query(statement,(error,result)=>{
+            if(error==null)
+            {
+                response.setHeader("Content-type","application/json");
+                var reply = {
+                                "status":"success",
+                                "message":result
+                            }
+                response.write(JSON.stringify(reply));
+                connection.end();
+                response.end();
+            }
+            else{
+                response.setHeader("Content-type","application/json");
+                var reply = {
+                    "status":"error",
+                    "message":error
+                }
+                response.write(JSON.stringify(reply));
+                connection.end();
+                response.end();
+            }
+        })
+})
 //set feedback
 app.post("/setFeedback",(request,response)=>{
     if(request.body!=null){
