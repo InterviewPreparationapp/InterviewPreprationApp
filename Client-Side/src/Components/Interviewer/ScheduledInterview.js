@@ -5,60 +5,48 @@ import "../css/Sceduleinterview.css"
 
 import React,{useState,useEffect} from "react";
 import axios from "axios";
-import { myheaders,getCurrentUserid } from "../routes/auth";
+import { myheaders,getCurrentUserid, getCurrentInterviewerid } from "../routes/auth";
 
 function ScheduledInterview() {
   const [interviewers, setInterviewers] = useState([]);
   const [scheduled,setScheduled] = useState([])
 
     useEffect(() => {
-         const token = myheaders(); 
-         const id = getCurrentUserid();
-         const apiurl = `http://127.0.0.1:9997/interviewer/InterviewSceduled/${id}`
-          //console.log(apiurl)
-        //console.log(headers)
-        axios.get(apiurl, {headers: token})
-         .then((result)=>{
-         // console.log(result.data);
-          //console.log(result.data.result);
-          if(result.data.status=="success")
-          {
-              const arr =result.data.result
-              //console.log(arr)
-              setScheduled(arr)
-              //console.log(arr)
-          }
-          else if (result.data.status=="error")
-          {
-            alert("Some Problem Occured")
-          }
-          else
-          {
-            alert("Something went wrong")
-          }
-    })
-          .catch(err => console.error(err));
+      const headers = myheaders();
+      const id = getCurrentInterviewerid();
+      axios.get("http://127.0.0.1:9997/interviewer/InterviewSceduled/",{id}, { headers })
+      .then(res => setInterviewers(res.data.result))
+      .catch(err => console.log(err));
+}, []);
+
+const ApproveRequest = () =>{
+  
+}
           
-  }, []);  
-
-  const renderSceduled = () => {
-    return scheduled.map(item => (
-        <div class="icard">
-          <p> Title:-<strong>{item.Title}</strong></p>
-          <p>Date:-{item.Date}</p>
-      
-        </div>       
-    ));
-  };
-
-
+const renderInterviewers = () => {
+  return interviewers.map((interviewer) => (
+      <div className="card" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewerid}>
+          <img src="..." className="card-img-top" alt="..." />
+          <ul className="list-group list-group-flush">
+                    <li className="list-group-item">{interviewer.Date}</li>
+                    <li className="list-group-item">{interviewer.Title}</li>
+                    <li className="list-group-item">{interviewer.Userid}</li>
+                </ul>
+                <div className="card-body">
+                   <button onClick={ApproveRequest} >Approve</button>
+                </div>
+      </div>
+        ));
+      };
 
     return (
         <>
         <Navbar/>
-        <div className="card-container">
-            {scheduled.length>0&& renderSceduled()}
-        </div>
+        <h3>GetInterviewers</h3>
+                <button onClick={() => console.log(interviewers)}>My interviewers button</button>
+                <div className="container">
+                    {renderInterviewers()}
+                </div>
    
         </>
       );
