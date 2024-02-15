@@ -5,7 +5,7 @@ import axios from "axios";
 import Navbar from "../Navbar";
 import { Link, useNavigate} from "react-router-dom";
 import Footer from "../Footer";
-import { doLogin } from "../routes/auth";
+import { doLogin, doLoginInterviewer } from "../routes/auth";
 function IntLogin() {
 
     const [credentials,setcredentials] = useState({"Email":"","Password":""});
@@ -34,7 +34,9 @@ function IntLogin() {
           if(result.data.status=="success")
           {
             alert("User Login Successfully ")
-           doLogin(result.data)
+            console.log(result.data);
+            //doLoginInterviewer(result.data)
+            doLogin(result.data)
             navigate("interviewer/dashboard")
           }
           else if (result.data.status=="error")

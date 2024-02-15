@@ -23,14 +23,7 @@ export const doLogin=(data)=>{
     //console.log(encodedUserDetails)
     sessionStorage.setItem("Userdata",encodedUserDetails)
 }
-export const doLoginInterviewer=(data)=>{
-    //console.log(data.token)
-    sessionStorage.setItem("data",data.token)
-    const InterviewerDetaitls={ Interviewerid: data.Interviewerid, InterviewerRole: data.Role};
-    const encodedInterviewerDetails =window.btoa(JSON.stringify(InterviewerDetaitls))
-    //console.log(encodedUserDetails)
-    sessionStorage.setItem("Interviewerdata",encodedInterviewerDetails)
-}
+
 
 export const getCurrentUser=()=>{
     if(isLoggedIn)
@@ -64,19 +57,5 @@ export const myheaders=()=>{
             token: sessionStorage['data'],
         }; 
         return headers;
-    }
-}
-
-
-export const getCurrentInterviewerid=()=>{
-    if(isLoggedIn)
-    {
-        const UserData = sessionStorage['Userdata']
-        const Userdetails=  JSON.parse(window.atob(UserData))
-        //console.log(Userdetails)
-        return  Userdetails.Interviewerid
-    }
-    else{
-        return false;
     }
 }
