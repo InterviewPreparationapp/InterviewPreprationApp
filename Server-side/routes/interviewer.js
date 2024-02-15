@@ -75,7 +75,8 @@ else{
 //Interviewer login
 app.post("/login",(request,response)=>{
     const {Email,Password}= request.body;
-    var statement  = `Select Interviewerid,FirstName,Email from Interviewers where Email='${Email}' and Password='${Password}'`;
+    //console.log(request.body)
+    var statement  = `Select Interviewerid,Role,FirstName,Email from Interviewers where Email='${Email}' and Password='${Password}'`;
      var connection = mysql.createConnection(ConnectionDetails);
      connection.query(statement,(error,users)=>{
         if (error) {
@@ -109,8 +110,8 @@ app.post("/login",(request,response)=>{
               var reply ={
                 "status":"success",
                 "token":token,
-                  "InterviewerName":user['FirstName'],
-                "Interviewerid":user['Interviewerid']
+                  "Role":user['Role'],
+                "Userid":user['Interviewerid']
               }
               response.send(JSON.stringify(reply))
               
@@ -119,6 +120,32 @@ app.post("/login",(request,response)=>{
      }) 
  });
 
+
+//get user by id api
+app.get("/getuserbyid/:No",(request,response)=>{
+    var No = request.params.No;
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement = `SELECT Interviewerid,FirstName,LastName,Email,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Profile FROM Interviewers  WHERE Interviewerid= ${No}`;
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+                response.setHeader("Content-type","application/json");
+                response.write(JSON.stringify(error));
+                connection.end();
+                response.end();
+        }
+    })  
+})
 
  //Edit profile api
 app.put("/edit/:id",(request,response)=>{

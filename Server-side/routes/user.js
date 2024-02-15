@@ -84,7 +84,7 @@ app.post("/register",upload.single('Image'),(request,response)=>{
 })
 
 //login api
-app.post("/login",(request,response)=>{
+app.post("/login",(request,response)=>{ 
    const {Email,Password}= request.body;
    var statement  = `Select Userid,Role,Email from Users WHERE Email='${Email}' AND Password='${Password}'`;
     var connection = mysql.createConnection(ConnectionDetails);
@@ -135,7 +135,7 @@ app.post("/login",(request,response)=>{
 app.get("/getuserbyid/:No",(request,response)=>{
     var No = request.params.No;
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement = `SELECT Userid,FirstName,LastName,Email,Password,Mobile,Address,Dob,Qualification,Gender,Role FROM Users WHERE Userid= ${No}`;
+    var statement = `SELECT Userid,FirstName,LastName,Email,Mobile,Address,Dob,Qualification,Gender,Profile FROM Users WHERE Userid= ${No}`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
