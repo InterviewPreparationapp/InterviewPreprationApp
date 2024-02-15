@@ -16,14 +16,14 @@ const Profile = ({ user }) => {
             <img src={img} alt="User Avatar"/>
           </div>
           <div className="profile-details">
-            <p> First Name: </p>
-            <p> Last Name:  </p>
-            <p> Email: </p>
-            <p> Mobile:</p>
-            <p> Address:</p>
-            <p>DOB:</p>
-            <p> Qulification:</p>
-            <p> Gender:</p>
+            <p><strong>First Name:</strong> {/*user.firstName*/}</p>
+            <p><strong>Last Name:</strong> {/*user.lastName*/}</p>
+            <p><strong>Email:</strong> {/*user.email*/}</p>
+            <p><strong>Mobile:</strong> {/*user.mobile*/}</p>
+            <p><strong>Address:</strong> {/*user.address*/}</p>
+            <p><strong>DOB:</strong> {/*user.dob*/}</p>
+            <p><strong>Qualification:</strong> {/*user.qualification*/}</p>
+            <p><strong>Gender:</strong> {/*user.gender*/}</p>
             <button className="button">Edit</button>
           </div>
         </div>
