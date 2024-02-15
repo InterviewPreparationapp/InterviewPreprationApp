@@ -5,13 +5,14 @@ import "../css/interviewer.css"
 import Navbar from "../Navbar";
 function IntRegister() {
     
-    const [FormData,setFormData] = useState({FirstName:"",LastName:"",
+    const [FormIntData,setFormIntData] = useState({FirstName:"",LastName:"",
                                              Email:"",Password:"",
                                              CnfPassowrd:"",Mobile:"",
                                              Address:"",Dob:"",
                                             QualifiedDegree:"",
                                             CompanyPosition:"",Gender:""
                                             });
+    const [image, setImage] = useState("");
 
     const [Error,setError] = useState(false);                                                                
     const [isSubmit,setisSumbit] =useState(false);
@@ -31,42 +32,56 @@ function IntRegister() {
 
     //on text change
    const OnTextChange = (args)=>{
-        var inputDataCopy = {...FormData};
+        var inputDataCopy = {...FormIntData};
         inputDataCopy[args.target.name]=args.target.value
         //console.log(inputDataCopy)
        // console.log(inputDataCopy)
-        setFormData(inputDataCopy)
+        setFormIntData(inputDataCopy)
     }
+
+    const handleImageChange = (e) => {
+      const file =e.target.files[0]
+      setImage(file);
+    };
 
     const submitReg = (e)=>
     {
       e.preventDefault()
-      const input = JSON.stringify(FormData);
-      var copy = {...FormData}      
-      // console.log(validForm())
-      // console.log(validDataForm())
       if(validForm() && validDataForm())
       {
-       // alert("data is valid"+input)
-        //console.log(input)
-        axios.post("http://127.0.0.1:9997/interviewer/register",copy).then((result)=>{
-          //console.log(result.data);
-          //console.log(result.data.status);
-          //console.log(result)
-          if(result.data.status=="success")
-          {
-            alert("Interviewers Registered Successfully")
-           navigate("/ourexperts/login")
-          }
-          else if (result.data.status=="error")
-          {
-            alert("Email is already used")
-          }
-          else
-          {
-            alert("Something went wrong")
-          }
-        })
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(FormIntData)) {
+          formData.append(key, value);
+        }
+       formData.append('Image',image)
+      //  for (const [key, value] of FormIntData.entries()) {
+      //   console.log(`${key}: ${value}`);
+      //  }
+        try{
+          axios.post("http://127.0.0.1:9997/interviewer/register",formData).then((result)=>{
+            //console.log(result.data);
+            //console.log(result.data.status);
+            //console.log(result)
+            if(result.data.status=="success")
+            {
+              alert("Interviewers Registered Successfully")
+             navigate("/ourexperts/login")
+            }
+            else if (result.data.status=="error")
+            {
+              alert("Email is already used")
+            }
+            else
+            {
+              alert("Something went wrong")
+            }
+          })
+        }
+        catch(ex)
+        {
+          alert("something went wrong")
+            console.log(ex)
+        }
       }
       else{
         alert("data is invalid")
@@ -91,16 +106,16 @@ function IntRegister() {
 
     const validDataForm=()=>{
       return (
-        FormData.FirstName !== "" &&
-        FormData.LastName !== "" &&
-        FormData.Email !== ""&&
-        FormData.Password !== "" &&
-        FormData.CnfPassowrd !== "" &&
-        FormData.Mobile !== "" &&
-        FormData.Address !== "" &&
-        FormData.Dob !== "" &&
-        FormData.QualifiedDegree !== "" &&
-        FormData.Gender !== "" && FormData.CompanyPosition !==""
+        FormIntData.FirstName !== "" &&
+        FormIntData.LastName !== "" &&
+        FormIntData.Email !== ""&&
+        FormIntData.Password !== "" &&
+        FormIntData.CnfPassowrd !== "" &&
+        FormIntData.Mobile !== "" &&
+        FormIntData.Address !== "" &&
+        FormIntData.Dob !== "" &&
+        FormIntData.QualifiedDegree !== "" &&
+        FormIntData.Gender !== "" && FormIntData.CompanyPosition !==""
       );
       
     }
@@ -112,12 +127,12 @@ function IntRegister() {
     switch(name)
     {
         case 'FirstName':
-          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.FirstName);
-          if(FormData.FirstName=="")
+          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.FirstName);
+          if(FormIntData.FirstName=="")
           {
             setErrFirstName("First Name Cannot Be Blank")
           }
-          else if(FormData.FirstName.length<4 &&FormData.FirstName.length<19){
+          else if(FormIntData.FirstName.length<4 &&FormIntData.FirstName.length<19){
           setErrFirstName("Name should not less than 4 and not greater than 19")
           }
           else if(!isValidInput){
@@ -129,12 +144,12 @@ function IntRegister() {
         break;
 
         case 'LastName':
-          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.LastName);
-          if(FormData.LastName=="")
+          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.LastName);
+          if(FormIntData.LastName=="")
           {
             setErrLastName("Last Name Cannot Be Blank")
           }
-          else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
+          else if(FormIntData.LastName.length<4 &&FormIntData.LastName.length<19){
             setErrLastName("Name should not less than 4 and not greater than 19")
           }
           else if(!isValidLastName){
@@ -146,12 +161,12 @@ function IntRegister() {
         break;
 
         case 'Email':
-          const EmailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(FormData.Email);
-          if(FormData.Email=="")
+          const EmailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(FormIntData.Email);
+          if(FormIntData.Email=="")
           {
             setErrEmail("Email Cannot Be Blank")
           }
-          // else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
+          // else if(FormIntData.LastName.length<4 &&FormIntData.LastName.length<19){
           //   setErrEmail("Name should not less than 4 and not greater than 19")
           // }
           else if(!EmailRegex){
@@ -163,7 +178,7 @@ function IntRegister() {
         break;
         
         case 'Password':
-          if(FormData.Password=="")
+          if(FormIntData.Password=="")
           {
             setErrPassword("Password Cannot Be Blank")
           }
@@ -174,7 +189,7 @@ function IntRegister() {
 
         case 'CnfPassowrd':
           var notblank =false;
-          if(FormData.CnfPassowrd=="")
+          if(FormIntData.CnfPassowrd=="")
           {
             notblank = false;
             setCnfErrPassword("Confirm Password Cannot Be Blank")
@@ -183,7 +198,7 @@ function IntRegister() {
             notblank = true;
             setCnfErrPassword("")
           }
-          if(notblank &&FormData.Password == FormData.CnfPassowrd)
+          if(notblank &&FormIntData.Password == FormIntData.CnfPassowrd)
           {
             setCnfErrPassword("")
           }
@@ -194,11 +209,11 @@ function IntRegister() {
           break;
           
         case 'Mobile':
-            if(FormData.Mobile=="")
+            if(FormIntData.Mobile=="")
           {
             setErrMobile("Mobile Cannot Be Blank")
           }
-          else if(parseInt(FormData.Mobile)==NaN)
+          else if(parseInt(FormIntData.Mobile)==NaN)
           {
             alert()
           }
@@ -208,7 +223,7 @@ function IntRegister() {
           break;
          
         case  'Address':
-          if(FormData.Address=="")
+          if(FormIntData.Address=="")
           {
             setErrAddress("Address Cannot Be Blank")
           }
@@ -218,7 +233,7 @@ function IntRegister() {
           break;
         
         case 'Dob':
-          if(FormData.Dob=="")
+          if(FormIntData.Dob=="")
           {
             setErrDob("Dob Cannot Be Blank")
           }
@@ -228,7 +243,7 @@ function IntRegister() {
           break;
         
         case  'QualifiedDegree':
-          if(FormData.QualifiedDegree=="")
+          if(FormIntData.QualifiedDegree=="")
           {
             setErrQualifiedDegree("QualifiedDegree Cannot Be Blank")
           }
@@ -237,7 +252,7 @@ function IntRegister() {
           }
           break;
         case 'Gender':
-          if(FormData.Gender=="")
+          if(FormIntData.Gender=="")
           {
             setErrGender("Gender Cannot Be Blank")
           }
@@ -247,7 +262,7 @@ function IntRegister() {
           break;
 
           case 'CompanyPosition':
-          if(FormData.CompanyPosition=="")
+          if(FormIntData.CompanyPosition=="")
           {
             setErrCompany("CompanyPosition Cannot Be Blank")
           }
@@ -261,7 +276,7 @@ function IntRegister() {
 
    //clear data on clear button
     const clearData = ()=>{
-        setFormData({
+        setFormIntData({
             FirstName:"",LastName:"",
             Email:"",Password:"",
             CnfPassowrd:"",Mobile:"",
@@ -287,7 +302,7 @@ function IntRegister() {
                   <input 
                   className="form-control" 
                   type="text" 
-                  value={FormData.FirstName} 
+                  value={FormIntData.FirstName} 
                   name="FirstName" 
                   onChange={OnTextChange}
                   onBlur={validateField}
@@ -304,7 +319,7 @@ function IntRegister() {
                   <input
                   className="form-control"
                   type="text" 
-                  value={FormData.LastName}
+                  value={FormIntData.LastName}
                   name="LastName" 
                   minlength="4"
                   maxlength="18"
@@ -323,7 +338,7 @@ function IntRegister() {
                   className="form-control"
                   type="Email"
                   placeholder="newuser@gmail.com"
-                  value={FormData.Email}
+                  value={FormIntData.Email}
                   name="Email"
                   required
                   onBlur={validateField}
@@ -340,7 +355,7 @@ function IntRegister() {
                   className="form-control"
                   type="Password"
                   placeholder="xxxxxxx"
-                  value={FormData.Password}
+                  value={FormIntData.Password}
                   name="Password"
                   required
                   onBlur={validateField}
@@ -357,7 +372,7 @@ function IntRegister() {
                   className="form-control"
                   type="text"
                   placeholder="Test@123"
-                  value={FormData.CnfPassowrd}
+                  value={FormIntData.CnfPassowrd}
                   name="CnfPassowrd"
                   required
                   onBlur={validateField}
@@ -374,7 +389,7 @@ function IntRegister() {
                   className="form-control"
                   type="text"
                   placeholder="eg@91xxxxx09"
-                  value={FormData.Mobile}
+                  value={FormIntData.Mobile}
                   name="Mobile"
                   required
                   onBlur={validateField}
@@ -393,7 +408,7 @@ function IntRegister() {
                   id="Address"
                   className="form-control"
                   type="text" 
-                  value={FormData.Address} 
+                  value={FormIntData.Address} 
                   name="Address" 
                   required
                   onBlur={validateField}
@@ -409,7 +424,7 @@ function IntRegister() {
                  id="Dob"
                   className="form-control"
                   type="date"
-                  value={FormData.Dob}
+                  value={FormIntData.Dob}
                   name="Dob"
                   required
                   onBlur={validateField}
@@ -425,7 +440,7 @@ function IntRegister() {
                  id="CompanyPosition"
                   className="form-control"
                   type="text"
-                  value={FormData.CompanyPosition}
+                  value={FormIntData.CompanyPosition}
                   name="CompanyPosition"
                   placeholder="@ex HR recuriter"
                   required
@@ -443,7 +458,7 @@ function IntRegister() {
                   type="text"
                   className="form-control"
                   placeholder="Eg@B.Tech/B.Sc"
-                  value={FormData.QualifiedDegree}
+                  value={FormIntData.QualifiedDegree}
                   name="QualifiedDegree"
                   required
                   onBlur={validateField}
@@ -459,7 +474,7 @@ function IntRegister() {
                 name="Gender"
                 className="form-select"
                 placeholder="Select Gender"
-                value={FormData.Gender}
+                value={FormIntData.Gender}
                 onBlur={validateField}
                 onChange={OnTextChange}>
                   <option value="" disabled selected>Select Gender</option>
@@ -468,6 +483,11 @@ function IntRegister() {
                   <option value="other">Other</option>
                 </select>
                 <span>{ErrGender}</span>
+                </div>
+
+                <div>
+                  <label>Enter Profile photo</label>
+                    <input type="file" onChange={handleImageChange} id="imagename"/>
                 </div>
                 <div>
                   <input type="Submit" value="Submit" onClick={submitReg}></input>

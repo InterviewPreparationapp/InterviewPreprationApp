@@ -4,6 +4,9 @@ const config = require('config')
 const app = express.Router();
 const jwt = require('jsonwebtoken')
 const config2 = require('../config/configjwt')
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const path = require('path');
 
 var ConnectionDetails ={
     host:config.get("server"),
@@ -12,32 +15,62 @@ var ConnectionDetails ={
     password:config.get("password"),
  }
 
+ const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'public/images');
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+    },
+  });
 
-//Get All Subjects Types
-app.get("/getAllSubjectsTypes",(request,response)=>{
+  const upload = multer({ storage: storage });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+ //Interviewer register query
+ app.post("/register",upload.single('Image'),(request,response)=>{
+    if(request.body!=null){
+    const {FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender}=request.body;
+    let path =null;
+        if(request.file.path.length>0)
+            path = request.file.path
+        
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement =`select Subjectid,Subjects,Title from SubjectsTypes`;
+    var statement = `insert into Interviewers(FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Role,ProfileUpdated,Profile)
+    values('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${CompanyPosition}','${QualifiedDegree}','${Gender}','Interviewer',now(),'${path}')`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
+            response.setHeader("Content-type","application/json");
             var reply = {
                             "status":"success",
-                            "result":result
+                            "message":result
                         }
-            response.setHeader("Content-type","application/json");
             response.write(JSON.stringify(reply));
             connection.end();
             response.end();
         }
         else{
             response.setHeader("Content-type","application/json");
-            response.write(JSON.stringify(error));
+            var reply = {
+                "status":"error",
+                "message":error
+            }
+            response.write(JSON.stringify(reply));
             connection.end();
             response.end();
-    }
-
+        }
     })
-});
+    }
+else{
+    var reply ={
+        "message" :"Failed to getting data",
+        "data":"errror"
+    }
+}
+    });
 
 //Interviewer login
 app.post("/login",(request,response)=>{
@@ -87,88 +120,7 @@ app.post("/login",(request,response)=>{
  });
 
 
-//  if(error==null)
-//  {
-//     var count = result[0].count;
-//     if(count>0)
-//     {
-//      response.write("query succesful");
-//      connection.end();
-//      response.end();
-//     }
-//  else
-//    {
-//     response.write("Login Failed !! UserName or Password");
-//     connection.end();
-//     response.end();
-//    }
-// }
-//  else{
-//      response.setHeader("Content-type","application/json");
-//      var reply = {
-//          "status":"error",
-//          "message":error
-//      }
-//      response.write(JSON.stringify(reply));
-//      connection.end();
-//      response.end();
-//  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- //Interviewer register query
- app.post("/register",(request,response)=>{
-    if(request.body!=null){
-    const {FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender}=request.body;
-    var connection = mysql.createConnection(ConnectionDetails);
-    var statement = `insert into Interviewers(FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Role,ProfileUpdated)
-    values('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${CompanyPosition}','${QualifiedDegree}','${Gender}','Interviewer',now())`;
-    connection.query(statement,(error,result)=>{
-        if(error==null)
-        {
-            response.setHeader("Content-type","application/json");
-            var reply = {
-                            "status":"success",
-                            "message":result
-                        }
-            response.write(JSON.stringify(reply));
-            connection.end();
-            response.end();
-        }
-        else{
-            response.setHeader("Content-type","application/json");
-            var reply = {
-                "status":"error",
-                "message":error
-            }
-            response.write(JSON.stringify(reply));
-            connection.end();
-            response.end();
-        }
-    })
-    }
-else{
-    var reply ={
-        "message" :"Failed to getting data",
-        "data":"errror"
-    }
-}
-    });
-
-//Edit profile api
-
+ //Edit profile api
 app.put("/edit/:id",(request,response)=>{
     var id = request.params.id;
     const {FirstName,LastName,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender}=request.body;
@@ -201,7 +153,6 @@ app.put("/edit/:id",(request,response)=>{
 });
 
 // delete Interviewers
-
 app.delete("/delete/:id",(request,response)=>{
     const id = request.params.id;
     var connection = mysql.createConnection(ConnectionDetails)
@@ -228,7 +179,6 @@ app.delete("/delete/:id",(request,response)=>{
 });
 
 // InterviewScheduled
-
 app.get("/InterviewSceduled/:id",(request,response)=>{
     const id = request.params.id;
     var connection = mysql.createConnection(ConnectionDetails);
@@ -285,7 +235,7 @@ app.patch("/updatestatus/:id",(request,response)=>{
     const Interviewid = request.params.id
         var connection = mysql.createConnection(ConnectionDetails);
         var statement = `Update InterviewSceduled set Status = 'approved' where Interviewid =  ${Interviewid};`;
-        console.log(statement)
+        //console.log(statement)
         connection.query(statement,(error,result)=>{
             if(error==null)
             {
@@ -347,5 +297,32 @@ app.post("/setFeedback",(request,response)=>{
         }
     }
         });
+
+//Get All Subjects Types
+app.get("/getAllSubjectsTypes",(request,response)=>{
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement =`select Subjectid,Subjects,Title from SubjectsTypes`;
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(error));
+            connection.end();
+            response.end();
+    }
+
+    })
+});
+
 
 module.exports= app;

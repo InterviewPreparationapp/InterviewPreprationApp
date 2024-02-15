@@ -6,13 +6,14 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 function Register() {
 
-    const [FormData,setFormData] = useState({"FirstName":"","LastName":"",
-                                             "Email":"","Password":"",
-                                             "CnfPassowrd":"","Mobile":"",
-                                             "Address":"","Dob":"",
-                                            "Qualification":"","Gender":""
+    const [FormUserData,setFormUserData] = useState({FirstName:"",LastName:"",
+                                             Email:"",Password:"",
+                                             CnfPassowrd:"",Mobile:"",
+                                             Address:"",Dob:"",
+                                            Qualification:"",Gender:""
                                             });
 
+     const [image, setImage] = useState("");                                        
     const [Error,setError] = useState(false);                                    
                                  
     const [isSubmit,setisSumbit] =useState(false);
@@ -28,41 +29,57 @@ function Register() {
     const [ErrGender,setErrGender] = useState("");
     //on text change
    const OnTextChange = (args)=>{
-        var inputDataCopy = {...FormData};
+        var inputDataCopy = {...FormUserData};
         inputDataCopy[args.target.name]=args.target.value
         //console.log(inputDataCopy)
        // console.log(inputDataCopy)
-        setFormData(inputDataCopy)
+        setFormUserData(inputDataCopy)
     }
 
-    const submitReg = (e)=>
+    const handleImageChange = (e) => {
+      const file =e.target.files[0]
+      setImage(file);
+    };
+
+
+    const submitReg =async (e)=>
     {
       e.preventDefault()
-      const input = JSON.stringify(FormData);
-      var copy = {...FormData}      
-      // console.log(validForm())
-      // console.log(validDataForm())
       if(validForm() && validDataForm())
       {
-       // alert("data is valid"+input)
-        console.log(input)
-        axios.post("http://localhost:9997/user/register",copy).then((result)=>{
-          console.log(result.data);
-          console.log(result.data.status);
-          console.log(result)
-          if(result.data.status=="success")
-          {
-            alert("User Registerd Successfully")
-          }
-          else if (result.data.status=="error")
-          {
-            alert("Email is already used")
-          }
-          else
-          {
+        const formData = new FormData();
+        for (const [key, value] of Object.entries(FormUserData)) {
+          formData.append(key, value);
+        }
+       formData.append('Image',image)
+      //  for (const [key, value] of formData.entries()) {
+      //   console.log(`${key}: ${value}`);
+      //  }
+      
+        try{
+          axios.post("http://localhost:9997/user/register",formData).then((result)=>{
+            // console.log(result.data);
+            // console.log(result.data.status);
+            // console.log(result)
+             if(result.data.status=="success")
+             {
+               alert("User Registerd Successfully")
+             }
+             else if (result.data.status=="error")
+             {
+               alert("Email is already used")
+             }
+             else
+             {
+               alert("Something went wrong")
+             }
+           })
+        }
+        catch(ex)
+        {
             alert("Something went wrong")
-          }
-        })
+            console.log(ex)
+        }
       }
       else{
         alert("data is invalid")
@@ -87,16 +104,16 @@ function Register() {
 
     const validDataForm=()=>{
       return (
-        FormData.FirstName !== "" &&
-        FormData.LastName !== "" &&
-        FormData.Email !== ""&&
-        FormData.Password !== "" &&
-        FormData.CnfPassowrd !== "" &&
-        FormData.Mobile !== "" &&
-        FormData.Address !== "" &&
-        FormData.Dob !== "" &&
-        FormData.Qualification !== "" &&
-        FormData.Gender !== ""
+        FormUserData.FirstName !== "" &&
+        FormUserData.LastName !== "" &&
+        FormUserData.Email !== ""&&
+        FormUserData.Password !== "" &&
+        FormUserData.CnfPassowrd !== "" &&
+        FormUserData.Mobile !== "" &&
+        FormUserData.Address !== "" &&
+        FormUserData.Dob !== "" &&
+        FormUserData.Qualification !== "" &&
+        FormUserData.Gender !== ""
       );
       
     }
@@ -108,12 +125,12 @@ function Register() {
     switch(name)
     {
         case 'FirstName':
-          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.FirstName);
-          if(FormData.FirstName=="")
+          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormUserData.FirstName);
+          if(FormUserData.FirstName=="")
           {
             setErrFirstName("First Name Cannot Be Blank")
           }
-          else if(FormData.FirstName.length<4 &&FormData.FirstName.length<19){
+          else if(FormUserData.FirstName.length<4 &&FormUserData.FirstName.length<19){
           setErrFirstName("Name should not less than 4 and not greater than 19")
           }
           else if(!isValidInput){
@@ -125,12 +142,12 @@ function Register() {
         break;
 
         case 'LastName':
-          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormData.LastName);
-          if(FormData.LastName=="")
+          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormUserData.LastName);
+          if(FormUserData.LastName=="")
           {
             setErrLastName("Last Name Cannot Be Blank")
           }
-          else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
+          else if(FormUserData.LastName.length<4 &&FormUserData.LastName.length<19){
             setErrLastName("Name should not less than 4 and not greater than 19")
           }
           else if(!isValidLastName){
@@ -142,12 +159,12 @@ function Register() {
         break;
 
         case 'Email':
-          const EmailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(FormData.Email);
-          if(FormData.Email=="")
+          const EmailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(FormUserData.Email);
+          if(FormUserData.Email=="")
           {
             setErrEmail("Email Cannot Be Blank")
           }
-          // else if(FormData.LastName.length<4 &&FormData.LastName.length<19){
+          // else if(FormUserData.LastName.length<4 &&FormUserData.LastName.length<19){
           //   setErrEmail("Name should not less than 4 and not greater than 19")
           // }
           else if(!EmailRegex){
@@ -159,7 +176,7 @@ function Register() {
         break;
         
         case 'Password':
-          if(FormData.Password=="")
+          if(FormUserData.Password=="")
           {
             setErrPassword("Password Cannot Be Blank")
           }
@@ -170,7 +187,7 @@ function Register() {
 
         case 'CnfPassowrd':
           var notblank =false;
-          if(FormData.CnfPassowrd=="")
+          if(FormUserData.CnfPassowrd=="")
           {
             notblank = false;
             setCnfErrPassword("Confirm Password Cannot Be Blank")
@@ -179,7 +196,7 @@ function Register() {
             notblank = true;
             setCnfErrPassword("")
           }
-          if(notblank &&FormData.Password == FormData.CnfPassowrd)
+          if(notblank &&FormUserData.Password == FormUserData.CnfPassowrd)
           {
             setCnfErrPassword("")
           }
@@ -190,11 +207,11 @@ function Register() {
           break;
           
         case 'Mobile':
-            if(FormData.Mobile=="")
+            if(FormUserData.Mobile=="")
           {
             setErrMobile("Mobile Cannot Be Blank")
           }
-          else if(parseInt(FormData.Mobile)==NaN)
+          else if(parseInt(FormUserData.Mobile)==NaN)
           {
             alert()
           }
@@ -204,7 +221,7 @@ function Register() {
           break;
          
         case  'Address':
-          if(FormData.Address=="")
+          if(FormUserData.Address=="")
           {
             setErrAddress("Address Cannot Be Blank")
           }
@@ -214,7 +231,7 @@ function Register() {
           break;
         
         case 'Dob':
-          if(FormData.Dob=="")
+          if(FormUserData.Dob=="")
           {
             setErrDob("Dob Cannot Be Blank")
           }
@@ -224,7 +241,7 @@ function Register() {
           break;
         
         case  'Qualification':
-          if(FormData.Qualification=="")
+          if(FormUserData.Qualification=="")
           {
             setErrQualification("Qualification Cannot Be Blank")
           }
@@ -233,7 +250,7 @@ function Register() {
           }
           break;
         case 'Gender':
-          if(FormData.Gender=="")
+          if(FormUserData.Gender=="")
           {
             setErrGender("Gender Cannot Be Blank")
           }
@@ -247,7 +264,7 @@ function Register() {
 
    //clear data on clear button
     const clearData = ()=>{
-        setFormData({
+        setFormUserData({
             FirstName:"",LastName:"",
             Email:"",Password:"",
             CnfPassowrd:"",Mobile:"",
@@ -256,11 +273,15 @@ function Register() {
         })
     } 
     
+    const mybutton=()=>{
+      console.log(image)
+      console.log(image.name)
+    }
     
     return ( 
         <center>
            <Navbar/>
-            <form  onSubmit={submitReg}>
+            <form  onSubmit={submitReg} >
             <div className="LoginBox ">
                 <h2> Register</h2>
                 <div>
@@ -268,7 +289,7 @@ function Register() {
                   <input 
                   className="form-control" 
                   type="text" 
-                  value={FormData.FirstName} 
+                  value={FormUserData.FirstName} 
                   name="FirstName" 
                   onChange={OnTextChange}
                   onBlur={validateField}
@@ -285,7 +306,7 @@ function Register() {
                   <input
                   className="form-control"
                   type="text" 
-                  value={FormData.LastName}
+                  value={FormUserData.LastName}
                   name="LastName" 
                   minlength="4"
                   maxlength="18"
@@ -304,7 +325,7 @@ function Register() {
                   className="form-control"
                   type="Email"
                   placeholder="newuser@gmail.com"
-                  value={FormData.Email}
+                  value={FormUserData.Email}
                   name="Email"
                   required
                   onBlur={validateField}
@@ -321,7 +342,7 @@ function Register() {
                   className="form-control"
                   type="Password"
                   placeholder="xxxxxxx"
-                  value={FormData.Password}
+                  value={FormUserData.Password}
                   name="Password"
                   required
                   onBlur={validateField}
@@ -338,7 +359,7 @@ function Register() {
                   className="form-control"
                   type="text"
                   placeholder="Test@123"
-                  value={FormData.CnfPassowrd}
+                  value={FormUserData.CnfPassowrd}
                   name="CnfPassowrd"
                   required
                   onBlur={validateField}
@@ -355,7 +376,7 @@ function Register() {
                   className="form-control"
                   type="text"
                   placeholder="eg@91xxxxx09"
-                  value={FormData.Mobile}
+                  value={FormUserData.Mobile}
                   name="Mobile"
                   required
                   onBlur={validateField}
@@ -374,7 +395,7 @@ function Register() {
                   id="Address"
                   className="form-control"
                   type="text" 
-                  value={FormData.Address} 
+                  value={FormUserData.Address} 
                   name="Address" 
                   required
                   onBlur={validateField}
@@ -390,7 +411,7 @@ function Register() {
                  id="DOB"
                   className="form-control"
                   type="date"
-                  value={FormData.Dob}
+                  value={FormUserData.Dob}
                   name="Dob"
                   required
                   onBlur={validateField}
@@ -407,7 +428,7 @@ function Register() {
                   type="text"
                   className="form-control"
                   placeholder="Eg@B.Tech/B.Sc"
-                  value={FormData.Qualification}
+                  value={FormUserData.Qualification}
                   name="Qualification"
                   required
                   onBlur={validateField}
@@ -423,7 +444,7 @@ function Register() {
                 name="Gender"
                 className="form-select"
                 placeholder="Select Gender"
-                value={FormData.Gender}
+                value={FormUserData.Gender}
                 onBlur={validateField}
                 onChange={OnTextChange}>
                   <option value="" disabled selected>Select Gender</option>
@@ -436,9 +457,9 @@ function Register() {
 
                 <div>
                   <label>Enter Profile photo</label>
-                    <input type="file"></input>
+                    <input type="file" onChange={handleImageChange} value={FormUserData.imagename} id="imagename"/>
                 </div>
-
+                  <button onClick={mybutton}>image check button</button>
                 <div>
                   <input type="Submit" value="Submit" onClick={submitReg}></input>
                   {"  "}{"  "}{"    "}
