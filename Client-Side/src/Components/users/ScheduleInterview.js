@@ -6,6 +6,8 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
 import { Carousel, Card } from 'react-bootstrap';
+//import "../css/ScheduleInterview.css"
+
 
 function ScheduleInterview() {
     const [interviewers, setInterviewers] = useState([]);
@@ -235,6 +237,9 @@ export default ScheduleInterview;
 {/* <div className="header">
                 <h2>Schedule Interview</h2>
             </div>
+            <br/><br/>
+            <br/><br/>
+            <br/><br/>
             <br/><br/>
             <div>
                 Date: <input type="date" name="Date" value={FormData.Date} onChange={OnTextChange}></input>
