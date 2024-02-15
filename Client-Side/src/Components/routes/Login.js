@@ -81,6 +81,7 @@ function Login() {
                                 placeholder="Enter Your Password"
                                 value={credentials.Password} 
                                 name="Password" 
+                                autoComplete="current-password"
                                 onChange={OnTextChange}/>
                                 <span></span>
                             </div>
