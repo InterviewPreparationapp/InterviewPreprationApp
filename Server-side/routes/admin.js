@@ -47,7 +47,7 @@ var ConnectionDetails ={
               var reply ={
                 "token":token,
                   "AdminName":user['Name'],
-                "Adminid":user['Adminid']
+                "Adminid":user['Userid']
               }
               response.send(JSON.stringify(reply))
               
