@@ -151,6 +151,35 @@ app.delete("/delete/:id",(request,response)=>{
     }) 
 });
 
+//getadminbyid
+app.get("/getadminbyid/:No",(request,response)=>{
+    var No = request.params.No;
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement = `SELECT Adminid,FirstName,LastName,Email,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Profile FROM Interviewers  WHERE Interviewerid= ${No}`;
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+                response.setHeader("Content-type","application/json");
+                response.write(JSON.stringify(error));
+                connection.end();
+                response.end();
+        }
+    })  
+})
+
+
+
+
 // Add SubjectsTypes
 app.post("/addSubjects",(request,response)=>{
     if(request.body!=null){

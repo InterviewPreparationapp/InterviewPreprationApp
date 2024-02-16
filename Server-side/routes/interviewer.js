@@ -122,7 +122,7 @@ app.post("/login",(request,response)=>{
 
 
 //get user by id api
-app.get("/getuserbyid/:No",(request,response)=>{
+app.get("/getinterviewerbyid/:No",(request,response)=>{
     var No = request.params.No;
     var connection = mysql.createConnection(ConnectionDetails);
     var statement = `SELECT Interviewerid,FirstName,LastName,Email,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Profile FROM Interviewers  WHERE Interviewerid= ${No}`;
@@ -287,6 +287,11 @@ app.patch("/updatestatus/:id",(request,response)=>{
             }
         })
 })
+
+app.delete("/deletescheduled/:id",(request,response)=>{
+
+});
+
 //set feedback
 app.post("/setFeedback",(request,response)=>{
     if(request.body!=null){
