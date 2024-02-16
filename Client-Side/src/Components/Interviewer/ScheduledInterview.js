@@ -1,65 +1,132 @@
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
-import "../css/Sceduleinterview.css"
-
-
-import React,{useState,useEffect} from "react";
+import "../css/Sceduleinterview.css";
+import Modal from "./Modal"
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { myheaders,getCurrentUserid, getCurrentInterviewerid } from "../routes/auth";
+import { myheaders, getCurrentUserid, getCurrentInterviewerid } from "../routes/auth";
 
 function ScheduledInterview() {
   const [interviewers, setInterviewers] = useState([]);
-  const [scheduled,setScheduled] = useState([])
+  const [UserDetail, setUserDetail] = useState();
+  const [modalOpen, setModalOpen] = useState(false);
 
-    useEffect(() => {
-      
-}, []);
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
 
-const ApproveRequest = () =>{
-  
-}
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
-const mybtn = ()=>{
+
   const headers = myheaders();
-      const id = getCurrentUserid();
-     // console.log(headers)
-       axios.get(`http://127.0.0.1:9997/interviewer/InterviewSceduled/${id}`,{ headers })
-       .then((res)=>{
-       // console.log(res)
-        //console.log(res.data.result)
-        setInterviewers(res.data.result)
-       })
-       .catch(err => console.log(err));
-       console.log(interviewers[0].Interviewid) 
-}
-          
-const renderInterviewers = () => {
-  return interviewers.map((interviewer) => (
-      <div className="card" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewid}>
-          <img src="..." className="card-img-top" alt="..." />
-          <ul className="list-group list-group-flush">
-                    <li className="list-group-item">{interviewer.Date}</li>
-                    <li className="list-group-item">{interviewer.Title}</li>
-                    <li className="list-group-item">{interviewer.Userid}</li>
-                </ul>
-                <div className="card-body">
-                   <button onClick={ApproveRequest} >Approve</button>
-                </div>
-      </div>
-        ));
-      };
+  const id = getCurrentUserid();
 
-    return (
-        <>
-        <Navbar/>
-        <h3>GetInterviewers</h3>
-                <button onClick={mybtn}>My interviewers button</button>
-                <div className="container">
-                    {renderInterviewers()}
-                </div>
-   
-        </>
-      );
-    }   
+  useEffect(() => {
+    myinterviews();
+  }, []);
+
+  const ApproveRequest = (event) => {
+    const iid = event.target.value;
+    const url = `http://127.0.0.1:9997/interviewer/updatestatus/${iid}`;
+    axios.patch(url, {}, { headers })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+    window.location.reload();
+  };
+
+  const myinterviews = () => {
+    axios.get(`http://127.0.0.1:9997/interviewer/InterviewSceduled/${id}`, { headers })
+      .then((res) => {
+        setInterviewers(res.data.result);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const UserDetails = (event) => {
+    
+    const uid = event.target.value;
+    axios.get(`http://127.0.0.1:9997/user/getuserbyid/${uid}`, { headers })
+      .then((res) => {
+        const data = res.data.result[0];
+        setUserDetail(data);
+        //alert("user details")
+      })
+      .catch((err) => console.log(err));
+    
+      handleOpenModal()
+  };
+
+  const RejectedInterview=()=>{
+    
+  }
+  
+  const getStatusStyle = (item) => {
+    if (item.Status === 'pending') {
+      return { color: 'red' };
+    } else if (item.Status === 'approved') {
+      return { color: 'green' };
+    } else {
+      // Add a default style if neither pending nor approved
+      return { color: 'black' };
+    }
+  };
+
+  const renderInterviewers = () => {
+    return interviewers.map((interviewer) => (
+     <>
+     <div className="icard" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewid}>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">{interviewer.Date}</li>
+            <li className="list-group-item">{interviewer.Title}</li>
+            <li className="list-group-item"><p style={getStatusStyle(interviewer)}>{interviewer.Status}</p></li>
+            <li className="list-group-item">
+            <button className="btn btn-secondary btn-sm"
+               value={interviewer.Userid} 
+               onClick={UserDetails}>
+                User Details
+              </button>
+            </li>
+            <li className="list-group-item"></li>
+            </ul>
+          
+          <div>
+          </div>
+          <div className="card-body">
+            {interviewer.Status !='approved' && <button onClick={ApproveRequest} value={interviewer.Interviewid} className="btn btn-success">Approve</button>}
+            {interviewer.Status =='approved' && <button  value={interviewer.Interviewid} className="btn btn-info btn-lg">Join</button>}
+          <button className="btn btn-danger" onClick={RejectedInterview}>Reject</button>
+          </div>
+          {UserDetail!=null &&
+          <Modal
+          isOpen={modalOpen}
+          onClose={handleCloseModal}
+          title="User Details"
+          userDetails={UserDetail}
+          />
+          }        
+      </div>
+      
+    </>
+    ));
+  };
+
+  return (
+    <>
+      <Navbar />
+      <h3>GetInterviewers</h3>
+     
+      <div className="card-container">
+      
+        {renderInterviewers()}
+      </div>
+      
+      
+    </>
+  );
+}
 
 export default ScheduledInterview;

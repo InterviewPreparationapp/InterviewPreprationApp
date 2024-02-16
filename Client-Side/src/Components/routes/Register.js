@@ -272,11 +272,7 @@ function Register() {
             Qualification:"",Gender:""
         })
     } 
-    
-    const mybutton=()=>{
-      console.log(image)
-      console.log(image.name)
-    }
+  
     
     return ( 
         <center>
@@ -459,7 +455,7 @@ function Register() {
                   <label>Enter Profile photo</label>
                     <input type="file" onChange={handleImageChange} value={FormUserData.imagename} id="imagename"/>
                 </div>
-                  <button onClick={mybutton}>image check button</button>
+                  
                 <div>
                   <input type="Submit" value="Submit" onClick={submitReg}></input>
                   {"  "}{"  "}{"    "}

@@ -146,15 +146,16 @@ function ScheduleInterview() {
   }
     const renderInterviewers = () => {
         return interviewers.map(item => (
-                <option value={item.Interviewerid}>{item.FirstName} {item.LastName}</option>       
+                <option value={item.Interviewerid} key={item.Interviewerid}>{item.FirstName} {item.LastName}</option>       
         ));
       };
       const renderSceduled = () => {
         return scheduled.map(item => (
-            <div class="icard">
+            <div class="icard" key={item.Interviewid}>
               <p> Title:-<strong>{item.Title}</strong></p>
               <p>Date:-{item.Date}</p>
               <p style={getStatusStyle(item)}>{item.Status}</p>
+              {item.Status == 'approved' && <button className="btn btn-success">Join</button>}
             </div>       
         ));
       };
@@ -169,11 +170,16 @@ function ScheduleInterview() {
           return { color: 'black' };
         }
       };
-
+      const DateStyle = (item)=>{
+        if(item.Date)
+        {
+          console.log(Date)
+        }
+      }
     return ( 
         <>
         <Navbar/> 
-        <button onClick={gettinginterviewer}>get</button>
+        
         {/* card for viewing interview sceduled and approved or not */}
         <div className="card-container">
             {scheduled.length>0&& renderSceduled()}

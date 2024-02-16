@@ -1,10 +1,16 @@
-
+import axios from "axios"
 //get user by id
-export const GetUserByid=(id)=>{
+export  const  GetUserByid=async(id,headers)=>{
+   try{
     if(id!=null)
     {
-        axios.get("/")
+       
+    }else {
+        throw new Error("id is Blank");
     }
-    else
-    return "id is Blank"
+   }
+   catch(error){
+    console.error(error);
+   }
+    
 }
