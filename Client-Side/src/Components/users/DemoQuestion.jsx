@@ -41,6 +41,7 @@ const DemoQuestion = () => {
   const handleSearch = () => {
     const token = myheaders()
     if (!subject) {
+        setDemoQuestions(null)
         setError('Please select a subject');
         return;
     }
