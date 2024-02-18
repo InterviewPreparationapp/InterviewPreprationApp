@@ -4,8 +4,8 @@ import "../css/Sceduleinterview.css";
 import Modal from "./Modal"
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { myheaders, getCurrentUserid, getCurrentInterviewerid } from "../routes/auth";
-
+import { myheaders, getCurrentUserid,DobChangeWithTime } from "../routes/auth";
+import {toast} from 'react-toastify'
 function ScheduledInterview() {
   const [interviewers, setInterviewers] = useState([]);
   const [UserDetail, setUserDetail] = useState();
@@ -32,12 +32,23 @@ function ScheduledInterview() {
     const url = `http://127.0.0.1:9997/interviewer/updatestatus/${iid}`;
     axios.patch(url, {}, { headers })
       .then((res) => {
-        console.log(res);
+        
       })
       .catch((err) => console.log(err));
     window.location.reload();
+    toast.success("Interview Approved")
   };
 
+  const RejectedInterview=(event)=>{
+    const iid = event.target.value;
+    const url = `http://127.0.0.1:9997/interview/deleteinterview/${iid}`;
+    axios.delete(url,{ headers })
+      .then((res) => {
+      })
+      .catch((err) => console.log(err));
+    window.location.reload();
+    toast.error("Interview Rejected")
+  }
   const myinterviews = () => {
     axios.get(`http://127.0.0.1:9997/interviewer/InterviewSceduled/${id}`, { headers })
       .then((res) => {
@@ -60,9 +71,7 @@ function ScheduledInterview() {
       handleOpenModal()
   };
 
-  const RejectedInterview=()=>{
-    
-  }
+ 
   
   const getStatusStyle = (item) => {
     if (item.Status === 'pending') {
@@ -80,7 +89,7 @@ function ScheduledInterview() {
      <>
      <div className="icard" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewid}>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">{interviewer.Date}</li>
+            <li className="list-group-item">{interviewer.Date && DobChangeWithTime(interviewer.Date)}</li>
             <li className="list-group-item">{interviewer.Title}</li>
             <li className="list-group-item"><p style={getStatusStyle(interviewer)}>{interviewer.Status}</p></li>
             <li className="list-group-item">
@@ -98,7 +107,7 @@ function ScheduledInterview() {
           <div className="card-body">
             {interviewer.Status !='approved' && <button onClick={ApproveRequest} value={interviewer.Interviewid} className="btn btn-success">Approve</button>}
             {interviewer.Status =='approved' && <button  value={interviewer.Interviewid} className="btn btn-info btn-lg">Join</button>}
-          <button className="btn btn-danger" onClick={RejectedInterview}>Reject</button>
+          <button className="btn btn-danger" onClick={RejectedInterview} value={interviewer.Interviewid}>Reject</button>
           </div>
           {UserDetail!=null &&
           <Modal

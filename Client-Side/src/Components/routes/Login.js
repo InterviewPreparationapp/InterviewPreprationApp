@@ -6,6 +6,8 @@ import Navbar from "../Navbar";
 import { Link, useNavigate} from "react-router-dom";
 import Footer from "../Footer";
 import { doLogin } from "./auth";
+import { toast } from 'react-toastify'
+
 function Login() {
 
     const [credentials,setcredentials] = useState({"Email":"","Password":""});
@@ -33,23 +35,23 @@ function Login() {
           //console.log(result.data.status);
           if(result.data.status=="success")
           {
-            alert("User Login Successfully ")
+            toast.success("User Login Successfully")
            doLogin(result.data)
             navigate("user/dashboard")
           }
           else if (result.data.status=="error")
           {
-            alert("Username or Password is incorrect")
+            toast.error("Username or Password is incorrect")
           }
           else
           {
-            alert("Something went wrong")
+            toast.error("Something went wrong")
           }
     })
     }
     catch(ex)
     {
-        alert("Something Went wrong")
+        toast.error("Something went wrong")
     }
    } 
 

@@ -59,3 +59,33 @@ export const myheaders=()=>{
         return headers;
     }
 }
+
+export const DobChange=(dateString)=>{
+    const date = new Date(dateString);
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+    const formattedDate = date.toLocaleString(undefined, options);
+
+    //console.log(formattedDate);
+       return formattedDate
+}
+
+export const DobChangeWithTime=(dateString)=>{
+    const date = new Date(dateString);
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+    };
+    const formattedDate = date.toLocaleString(undefined, options);
+
+    //console.log(formattedDate);
+       return formattedDate
+}

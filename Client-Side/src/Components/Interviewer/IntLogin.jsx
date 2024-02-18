@@ -6,6 +6,8 @@ import Navbar from "../Navbar";
 import { Link, useNavigate} from "react-router-dom";
 import Footer from "../Footer";
 import { doLogin, doLoginInterviewer } from "../routes/auth";
+import { toast } from 'react-toastify'
+
 function IntLogin() {
 
     const [credentials,setcredentials] = useState({"Email":"","Password":""});
@@ -33,7 +35,7 @@ function IntLogin() {
           //console.log(result.data.status);
           if(result.data.status=="success")
           {
-            alert("User Login Successfully ")
+            toast.success("User Login Successfully")
             console.log(result.data);
             //doLoginInterviewer(result.data)
             doLogin(result.data)
@@ -41,17 +43,17 @@ function IntLogin() {
           }
           else if (result.data.status=="error")
           {
-            alert("Username or Password is incorrect")
+            toast.error("Username or Password is incorrect")
           }
           else
           {
-            alert("Something went wrong")
+            toast.error("Something went wrong")
           }
     })
     }
     catch(ex)
     {
-        alert("Something Went wrong")
+        toast.error("Something went wrong")
         console.log(ex)
     }
    } 

@@ -1,6 +1,6 @@
 import Navbar from "../users/Navbar1";
 import "../css/Sceduleinterview.css"
-import { getCurrentUserid,getCurrentUser, myheaders } from "../routes/auth";
+import { getCurrentUserid,getCurrentUser, myheaders,DobChangeWithTime } from "../routes/auth";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
@@ -153,7 +153,7 @@ function ScheduleInterview() {
         return scheduled.map(item => (
             <div class="icard" key={item.Interviewid}>
               <p> Title:-<strong>{item.Title}</strong></p>
-              <p>Date:-{item.Date}</p>
+              <p>Date:-{item.Date && DobChangeWithTime(item.Date)}</p>
               <p style={getStatusStyle(item)}>{item.Status}</p>
               {item.Status == 'approved' && <button className="btn btn-success">Join</button>}
             </div>       

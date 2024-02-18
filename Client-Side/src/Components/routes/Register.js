@@ -4,6 +4,9 @@ import "../css/Register.css"
 import axios from "axios";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
+
 function Register() {
 
     const [FormUserData,setFormUserData] = useState({FirstName:"",LastName:"",
@@ -14,8 +17,7 @@ function Register() {
                                             });
 
      const [image, setImage] = useState("");                                        
-    const [Error,setError] = useState(false);                                    
-                                 
+    const [Error,setError] = useState(false);                                                               
     const [isSubmit,setisSumbit] =useState(false);
     const [ErrFirstName,setErrFirstName] = useState("");
     const [ErrLastName,setErrLastName] = useState("");
@@ -27,6 +29,9 @@ function Register() {
     const [ErrDob,setErrDob] = useState("");
     const [ErrQualification,setErrQualification] = useState("");
     const [ErrGender,setErrGender] = useState("");
+
+    const navigate = useNavigate()
+
     //on text change
    const OnTextChange = (args)=>{
         var inputDataCopy = {...FormUserData};
@@ -63,26 +68,27 @@ function Register() {
             // console.log(result)
              if(result.data.status=="success")
              {
-               alert("User Registerd Successfully")
+               toast.success("User Registerd Successfully")
+               navigate("/login")
              }
              else if (result.data.status=="error")
              {
-               alert("Email is already used")
+               toast.error("Email is already used")
              }
              else
              {
-               alert("Something went wrong")
+               toast.error("Something went wrong")
              }
            })
         }
         catch(ex)
         {
-            alert("Something went wrong")
+            toast.error("Something went wrong")
             console.log(ex)
         }
       }
       else{
-        alert("data is invalid")
+        toast.error("data is invalid")
       }
     }
     
@@ -289,8 +295,9 @@ function Register() {
                   name="FirstName" 
                   onChange={OnTextChange}
                   onBlur={validateField}
-                  minlength="4"
+                  minlength="2"
                   maxlength="18"
+                  placeholder="@Ex. User"
                   required>
                   </input>
                   <span>{ErrFirstName}</span>
@@ -304,7 +311,8 @@ function Register() {
                   type="text" 
                   value={FormUserData.LastName}
                   name="LastName" 
-                  minlength="4"
+                  placeholder="@Ex. User"
+                  minlength="1"
                   maxlength="18"
                   required
                   onBlur={validateField}

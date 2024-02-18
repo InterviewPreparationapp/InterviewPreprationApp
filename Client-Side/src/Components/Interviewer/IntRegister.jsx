@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link,useNavigate } from "react-router-dom";
 import "../css/interviewer.css"
 import Navbar from "../Navbar";
+import { toast } from 'react-toastify'
+
 function IntRegister() {
     
     const [FormIntData,setFormIntData] = useState({FirstName:"",LastName:"",
@@ -64,27 +66,27 @@ function IntRegister() {
             //console.log(result)
             if(result.data.status=="success")
             {
-              alert("Interviewers Registered Successfully")
+              toast.success("User Registerd Successfully")
              navigate("/ourexperts/login")
             }
             else if (result.data.status=="error")
             {
-              alert("Email is already used")
+              toast.error("Email is already used")
             }
             else
             {
-              alert("Something went wrong")
+              toast.error("Something went wrong")
             }
           })
         }
         catch(ex)
         {
-          alert("something went wrong")
+          toast.error("Something went wrong")
             console.log(ex)
         }
       }
       else{
-        alert("data is invalid")
+        toast.error("data is invalid")
       }
     }
     

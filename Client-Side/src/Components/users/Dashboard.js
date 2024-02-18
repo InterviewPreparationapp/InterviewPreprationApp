@@ -3,13 +3,17 @@ import Navbar from "../users/Navbar1";
 import Footer1 from "./UserDashFooter";
 import logo from "../images/icon2.png";
 import "../css/Dashboard.css"  // Import your CSS file
-
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+    const navigate = useNavigate()
     useEffect(() => {
         // Your side effects or data fetching code here
         // For example:
         // fetchData();
     }, []);
+
+
+
 
     return (
         <>
@@ -23,7 +27,7 @@ function Dashboard() {
                    
                     <h2>Interview Preparation Dashboard</h2>
                     <p>Prepare for a job with PrepInsta’s Interview Preparation dashboard. This page is a complete guide to prepare for job interview for freshers and experienced candidates. .</p>
-                    <button className="button">Check Out Questions</button>
+                    <button className="button" onClick={()=>{navigate("/login/user/demoquestion")}}>Check Out Questions</button>
                 </div>
                 <div>
                     <h3> How To Prepare For An Interview?</h3>
