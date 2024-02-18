@@ -24,6 +24,12 @@ import PastInterview from "./Components/Interviewer/PastInterview";
 import ScheduledInterview from "./Components/Interviewer/ScheduledInterview";
 import InterviewRecords from "./Components/Interviewer/InterviewRecords";
 import ProfileI from "./Components/Interviewer/ProfileI";
+import DashboardA from "./Components/Admin/DashboardA";
+import Adminlogin from "./Components/Admin/Adminlogin";
+import AllUsers from "./Components/Admin/AllUsers";
+import AllInterviewers from "./Components/Admin/AllInterviewers";
+import DemoQuestionA from "./Components/Admin/DemoQuestionA";
+import ProfileA from "./Components/Admin/ProfileA";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,6 +62,7 @@ function App() {
                             <Route  path="logout"  element={<PrivateRoute/>}/>
                         </Route>
                         <Route path="ourexperts/login/interviewer" element={<PrivateRoute/>}>
+                            
                             <Route path="dashboard" element={<Dashboard1/>}/>
                             <Route path="scheduledinterviews" element={<ScheduledInterview/>}/>
                             <Route path="pastinterview" element={<PastInterview/>}/>
@@ -66,8 +73,22 @@ function App() {
                         <Route  path="/logout"  element={<Login/>}/>
                         <Route path="/ourexperts/register" element={<IntRegister/>}/>
                         <Route path="/ourexperts/login" element={<IntLogin/>}/>
+<<<<<<< HEAD
                         
                         {/* <Route path="/admin/YWRtaW4yMDIz"  element={</>}> */}
+=======
+                        <Route path ="/QWRtaW4=" element={<Adminlogin/>}/>
+                    <Route path="QWRtaW4=/login" element={<PrivateRoute/>}>
+                       <Route path="dashboard" element={<DashboardA/>}/>
+                       <Route path="allusers" element={<AllUsers/>}/>
+                       <Route path="allinterviewers" element={<AllInterviewers/>}/>
+                       <Route path="demoquestion" element={<DemoQuestionA/>}/>
+                       <Route path="profiles" element={<ProfileA/>}/>
+                        </Route>
+
+                    
+
+>>>>>>> ba642c1b (Admin Side)
                         
                 </Routes>
         

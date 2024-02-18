@@ -45,6 +45,7 @@ var ConnectionDetails ={
               // create a token
               const token = jwt.sign(payload, config2.secrete)
               var reply ={
+                "status":"success",
                 "token":token,
                   "AdminName":user['Name'],
                 "Adminid":user['Userid']
