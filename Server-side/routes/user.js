@@ -39,16 +39,16 @@ app.post("/register",upload.single('Image'),(request,response)=>{
    // console.log(request.body)
     if(request.body!=null)
     {
-        let path =null;
-        if(request.file.path.length>0)
-            path = request.file.path
+      let Path ="";
+        if(request.file)
+             Path = request.file.path
 
-       // console.log(request.body);
+        console.log(request.body);
         const {FirstName,LastName,Email,Password,Mobile,Address,Dob,Qualification,Gender} = request.body;
         
        var connection = mysql.createConnection(ConnectionDetails);
          var statement = `INSERT INTO Users(FirstName,LastName,Email,Password,Mobile,Address,Dob,Qualification,Gender,Role,LastModified,Profile)VALUES
-                                            ('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${Qualification}','${Gender}','User',now(),'${path}') `;
+                                            ('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${Qualification}','${Gender}','User',now(),'${Path}') `;
         //console.log(statement);
         connection.query(statement,(error,result)=>{
             if(error==null)
@@ -139,9 +139,11 @@ app.get("/getuserbyid/:No",(request,response)=>{
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
+          const profileimage= result[0].Profile
+          
             var reply = {
                             "status":"success",
-                            "result":result
+                            "result":result,
                         }
             response.setHeader("Content-type","application/json");
             response.write(JSON.stringify(reply));
@@ -159,12 +161,12 @@ app.get("/getuserbyid/:No",(request,response)=>{
 })
 
 //edit user profile api
-app.put("/edituserprofile/:No",(req,response)=>{
- const No= req.params.No;
-  const {FirstName,LastName,Password,Mobile,Address,Dob,Qualification}= req.body;
+app.put("/edituserprofile/:id",(req,response)=>{
+ const No= req.params.id;
+  const {FirstName,LastName,Mobile,Address,Qualification}= req.body;
   var connection = mysql.createConnection(ConnectionDetails);
-  var statement = `UPDATE Users set FirstName='${FirstName}',LastName='${LastName}',Password='${Password}',Mobile='${Mobile}',
-  Address='${Address}',Dob='${Dob}',Qualification ='${Qualification}' WHERE Userid=${No}`
+  var statement = `UPDATE Users set FirstName='${FirstName}',LastName='${LastName}',Mobile='${Mobile}',
+  Address='${Address}',Qualification ='${Qualification}' WHERE Userid=${No}`
  // console.log(statement)
     connection.query(statement,(error,result)=>{
         if(error==null)

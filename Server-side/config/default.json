@@ -1,7 +1,12 @@
 {
     "server" :"localhost",
     "database":"InterviewApp",
+<<<<<<< HEAD
     "user":"W2_80292_Sidhantk",
     "password":"Indiawin11",
+=======
+    "user":"W2_80692_Aniket",
+    "password":"Aniket",
+>>>>>>> 0507cafe (server side profile)
     "port":9997
 }

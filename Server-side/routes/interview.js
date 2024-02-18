@@ -64,6 +64,34 @@ app.post("/setInteview",(request,response)=>{
 
 })
 
+//delete interview
+app.delete("/deleteinterview/:id",(request,response)=>{
+    const id = request.params.id;
+   // console.log(id)
+   var connection = mysql.createConnection(ConnectionDetails);
+    var statement =`Delete from InterviewSceduled where Interviewid = ${id};`;
+   // console.log(statement)
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+                response.setHeader("Content-type","application/json");
+                response.write(JSON.stringify(error));
+                connection.end();
+                response.end();
+        }
+    })
+
+})
 
 //sending user interview sceduled details
 app.get("/getmyinterviews/:id",(request,response)=>{

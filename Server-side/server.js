@@ -12,7 +12,7 @@ const InterviewerRouteHandler = require('./routes/interviewer');
 const app = express();
 app.use(express.json());
 app.use(cors())
-
+app.use("/public",express.static("public"))
 
 app.use((request, response, next) => {
     const skipTokenUrls = [
@@ -21,6 +21,7 @@ app.use((request, response, next) => {
         '/interviewer/login',
         '/interviewer/register',
         '/admin/login',
+        
     ];
 
     if (

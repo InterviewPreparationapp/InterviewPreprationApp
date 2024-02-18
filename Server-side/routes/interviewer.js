@@ -33,13 +33,13 @@ app.use(bodyParser.json());
  app.post("/register",upload.single('Image'),(request,response)=>{
     if(request.body!=null){
     const {FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender}=request.body;
-    let path =null;
-        if(request.file.path.length>0)
-            path = request.file.path
+    let Path ="";
+        if(request.file)
+             Path = request.file.path
         
     var connection = mysql.createConnection(ConnectionDetails);
     var statement = `insert into Interviewers(FirstName,LastName,Email,Password,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Role,ProfileUpdated,Profile)
-    values('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${CompanyPosition}','${QualifiedDegree}','${Gender}','Interviewer',now(),'${path}')`;
+    values('${FirstName}','${LastName}','${Email}','${Password}','${Mobile}','${Address}','${Dob}','${CompanyPosition}','${QualifiedDegree}','${Gender}','Interviewer',now(),'${Path}')`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
@@ -150,10 +150,10 @@ app.get("/getinterviewerbyid/:No",(request,response)=>{
  //Edit profile api
 app.put("/edit/:id",(request,response)=>{
     var id = request.params.id;
-    const {FirstName,LastName,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender}=request.body;
+    const {FirstName,LastName,Mobile,Address,CompanyPosition}=request.body;
 
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement = `update Interviewers set FirstName='${FirstName}',LastName='${LastName}',Mobile='${Mobile}',Address='${Address}',Dob='${Dob}',CompanyPosition='${CompanyPosition}',QualifiedDegree='${QualifiedDegree}',Gender='${Gender}',Role='Interviewer' where Interviewerid=${id}`;
+    var statement = `update Interviewers set FirstName='${FirstName}',LastName='${LastName}',Mobile='${Mobile}',Address='${Address}',CompanyPosition='${CompanyPosition}' where Interviewerid=${id}`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
