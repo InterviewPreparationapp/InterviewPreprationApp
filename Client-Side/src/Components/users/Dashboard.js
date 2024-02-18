@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Navbar from "../users/Navbar1";
-import Footer1 from "./UserDashFooter";
+import Footer1 from "../Footer";
 import logo from "../images/icon2.png";
 import "../css/Dashboard.css"  // Import your CSS file
 import { useNavigate } from "react-router-dom";

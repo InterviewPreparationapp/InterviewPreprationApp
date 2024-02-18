@@ -1,36 +1,41 @@
-/* Dashboard.css */
-
 /* Styles for the dashboard content */
 .dashboard-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
-    text-align: center;
+    background-image: url('../images/Dashboardbackgound1.jpg.\ jpg'); /* Background image */
+    background-size: cover; /* Cover the entire container */
+    background-position: center; /* Center the background image */
 }
 
 /* Styles for the content container */
 .content-container {
-    background-color: #f0f0f0;
-    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    border-radius: 15px;
     padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 80%;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Styles for the title */
-.content-container h3 {
-    color: #333;
-    font-size: 24px;
+.content-container h2 {
+    color: #0a1377;
+    font-size: 30px;
     margin-bottom: 10px;
 }
 
 /* Styles for the paragraph */
 .content-container p {
     color: #666;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5;
 }
 
 /* Styles for the button */
-.button {
+.content-container .button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -39,12 +44,17 @@
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 15px;
 }
 
-.button:hover {
+.content-container .button:hover {
     background-color: #0056b3;
 }
 
-.dashboard-content h3 {
-    font-weight: bold; /* Make the font bold */
+/* Footer styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
