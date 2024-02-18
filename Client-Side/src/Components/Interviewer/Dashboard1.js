@@ -1,36 +1,8 @@
-// import { useEffect,useState } from "react";
-// import Navbar from "./Navbar";;
-
-// function Dashboard1() {
-//     const [isChecked, setChecked] = useState(false);
-
-//   const handleCheckboxChange = () => {
-//     setChecked(!isChecked);
-//   };
-//     return (
-//     <>
-//     <Navbar/>
-//     <h1> Interviewers details</h1>
-//     <label>
-
-//         <input
-//           type="checkbox"
-//           checked={isChecked}
-//           onChange={handleCheckboxChange}
-//         />
-//         {isChecked ? 'Checked Label' : 'Unchecked Label'}
-//       </label>
-//     </>
-//     );
-    
-// }
-
-// export default Dashboard1;import React, { useEffect, useState } from "react";
 
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 
-import interviewer1Img from "../images/Interviewer1.avif"; // Import images for interviewers
+import interviewer1Img from "../images/Interviewer1.avif"; 
 import interviewer2Img from "../images/Interviewer2.jpeg";
 import interviewer3Img from "../images/Interviewer3.jpeg";
 
@@ -49,7 +21,7 @@ function Dashboard1() {
       <strong>
       <h1 style={{ textAlign: "center" , fontFamily: "fantasy",}} >Interviewers Dashboard</h1>
       </strong>
-      {/* Checkbox for toggling label */}
+      {}
       <label style={{ marginLeft: "10px" }}>
         <input
           type="checkbox"
@@ -59,7 +31,7 @@ function Dashboard1() {
         {isChecked ? 'Checked Label' : 'Unchecked Label'}
       </label>
 
-      {/* About Interviewer section */}
+      {}
       <div className="interviewer-container">
         {/* Interviewer 1 */}
         <div className="interviewer-card">

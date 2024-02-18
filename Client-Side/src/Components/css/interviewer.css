@@ -15,18 +15,17 @@ body {
 
 
 .register-box {
-    width: 100%; /*Take full width on small screens */
-    max-width: 600px; /* Set a maximum width for larger screens */
-    margin: 100px auto 10px;  /* Center the box horizontally */
+    width: 100%; 
+    max-width: 600px; 
+    margin: 100px auto 10px;  
     padding: 20px;
     text-align: center;
     position: relative;
     align-items: center;
     justify-content: space-between;
     background: rgb(217, 211, 201);
-    box-sizing: border-box; /* Use border-box to include padding in width and height */
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1); /* Horizontal offset, vertical offset, blur radius, color */
-
+    box-sizing: border-box; 
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1); 
 }
 
 h2 {
@@ -65,13 +64,13 @@ button:hover {
 }
 
 nav a {
-    color: #ffffff; /* Default color */
+    color: #ffffff; 
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold;
   }
   
-  /* Hover styles */
+ 
   nav a:hover {
-    color: #ff00f7; /* Hover color */
+    color: #ff00f7; 
   }
