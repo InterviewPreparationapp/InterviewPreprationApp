@@ -73,10 +73,10 @@ function App() {
                         <Route  path="/logout"  element={<Login/>}/>
                         <Route path="/ourexperts/register" element={<IntRegister/>}/>
                         <Route path="/ourexperts/login" element={<IntLogin/>}/>
-<<<<<<< HEAD
+
                         
                         {/* <Route path="/admin/YWRtaW4yMDIz"  element={</>}> */}
-=======
+
                         <Route path ="/QWRtaW4=" element={<Adminlogin/>}/>
                     <Route path="QWRtaW4=/login" element={<PrivateRoute/>}>
                        <Route path="dashboard" element={<DashboardA/>}/>
@@ -88,7 +88,7 @@ function App() {
 
                     
 
->>>>>>> ba642c1b (Admin Side)
+ba642c1b (Admin Side)
                         
                 </Routes>
         
