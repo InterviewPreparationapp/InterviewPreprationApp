@@ -154,9 +154,9 @@ app.delete("/delete/:id",(request,response)=>{
 
 //getadminbyid
 app.get("/getadminbyid/:No",(request,response)=>{
-    var No = request.params.No;
+    var id = request.params.id;
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement = `SELECT Adminid,FirstName,LastName,Email,Mobile,Address,Dob,CompanyPosition,QualifiedDegree,Gender,Profile FROM Interviewers  WHERE Interviewerid= ${No}`;
+    var statement = `SELECT Name,Email,Password from Admin WHERE Adminid= ${id}`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
@@ -450,9 +450,9 @@ app.get("/getallusers",(request,response)=>{
 });
 //Delete any student
 app.delete("/deleteUser/:id",(request,response)=>{
-    const id = request.params.id
+    const userid = request.params.id
     var connection = mysql.createConnection(ConnectionDetails)
-    var statement = `DELETE From Users WHERE Userid=${id}`;
+    var statement = `DELETE From Users WHERE Userid=${userid}`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {

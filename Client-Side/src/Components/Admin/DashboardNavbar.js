@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import image1 from '../images/e.png';
 import "../css/NavbarA.css"
-const NavbarA = () => {
+//import Dashboard from '../users/Dashboard';
+const DashboardNavbar = () => {
     const [clicked, setClicked] = useState(false);
     const navigate = useNavigate();
   
@@ -10,12 +11,7 @@ const NavbarA = () => {
       setClicked(!clicked);
     };
   
-    const doLogout = () => {
-      sessionStorage.removeItem('data');
-      sessionStorage.removeItem('Userdata');
-      navigate('/logout');
-    };
-  
+   
     return (
       <>
         <nav>
@@ -28,29 +24,23 @@ const NavbarA = () => {
             <ul id="navbar" className={clicked ? '#navbar active' : '#navbar'}>
               <li>
                 {' '}
-                <Link to="/QWRtaW4=/login/dashboard">All Interviews</Link>
+                <Link to="/QWRtaW4=/login/demoquestion/allquestions">All Questions</Link>
               </li>
               <li>
                 {' '}
-                <Link to="/QWRtaW4=/login/allusers">All Users</Link>
+                <Link to="/QWRtaW4=/login/demoquestion/allsubjects">All Subjects</Link>
               </li>
               <li>
                 {' '}
-                <Link to="/QWRtaW4=/login/allinterviewers">All Interviewers</Link>
+                <Link to="/QWRtaW4=/login/demoquestion/addquestions">Add Questions</Link>
               </li>
               <li>
                 {' '}
-                <Link to="/QWRtaW4=/login/demoquestion">Demo Questions</Link>
+                <Link to="/QWRtaW4=/login/demoquestion/addsubjects">Add Subjects</Link>
               </li>
               <li>
                 {' '}
-                <Link to="/QWRtaW4=/login/profiles">Profile</Link>
-              </li>
-              <li>
-                {' '}
-                <Link to="/" onClick={doLogout}>
-                  Logout
-                </Link>
+                <Link to="/QWRtaW4=/login/dashboard">Back</Link>
               </li>
             </ul>
           </div>
@@ -65,4 +55,4 @@ const NavbarA = () => {
     );
   };
   
-  export default NavbarA;
+  export default DashboardNavbar;

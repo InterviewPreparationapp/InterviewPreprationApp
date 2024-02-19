@@ -180,7 +180,7 @@ app.get("/getfeedback",(request,response)=>{
 
 app.get("/fetchAllInterviews",(request,response)=>{ 
     var connection  = mysql.createConnection(ConnectionDetails);
-    var statement = `SELECT Interviewid,Date,Title,Interviewers.FirstName as Interviewer,Users.FirstName as User  FROM InterviewSceduled,Interviewers,Users where InterviewSceduled.Interviewerid=Interviewers.Interviewerid and InterviewSceduled.Userid=Users.Userid`;
+    var statement = `SELECT Interviewid,Date,Title,Status,Interviewers.FirstName as Interviewer,Users.FirstName as User  FROM InterviewSceduled,Interviewers,Users where InterviewSceduled.Interviewerid=Interviewers.Interviewerid and InterviewSceduled.Userid=Users.Userid`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {

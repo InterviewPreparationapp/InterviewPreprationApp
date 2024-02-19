@@ -33,6 +33,10 @@ import ProfileA from "./Components/Admin/ProfileA";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AllQuestions from "./Components/Admin/AllQuestions";
+import AllSubjects from "./Components/Admin/AllSubjects";
+import AddQuestions from "./Components/Admin/AddQuestions";
+import AddSubjects from "./Components/Admin/AddSubjects";
 
 function App() {
     const token = sessionStorage['token']
@@ -97,6 +101,12 @@ ba642c1b (Admin Side)
 =======
 >>>>>>> b33ccda6 (Admin Side)
                         
+                <Route path="/QWRtaW4=/login/demoquestion" element={<PrivateRoute/>}>
+                    <Route path="allquestions" element={<AllQuestions/>}/>
+                    <Route path="allsubjects" element={<AllSubjects/>}/>
+                    <Route path="addquestions" element={<AddQuestions/>}/>
+                    <Route path="addsubjects" element={<AddSubjects/>}/>
+                    </Route>
                 </Routes>
         
                 <ToastContainer/>

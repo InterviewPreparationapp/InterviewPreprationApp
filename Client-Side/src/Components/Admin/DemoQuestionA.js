@@ -1,8 +1,9 @@
+import DashboardNavbar from "./DashboardNavbar";
 import NavbarA from "./NavbarA";
 
 function DemoQuestionA() {
     return ( <>
-    <NavbarA/>
+    <DashboardNavbar/>
     </> );
 }
 
