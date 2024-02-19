@@ -50,8 +50,7 @@ const DemoQuestion = () => {
     axios.get(`http://127.0.0.1:9997/admin/demoquestions?subject=${subject}`, { headers: token })
         .then(response => {
             if (response.data.status === "success") {
-              console.log(response.data.result)
-                //setDemoQuestions(response.data.result);
+                setDemoQuestions(response.data.result);
                 setError('');
             } else {
               setError('No demo questions found for the selected subject');
