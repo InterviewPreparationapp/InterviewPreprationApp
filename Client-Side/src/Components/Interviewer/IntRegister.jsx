@@ -71,6 +71,7 @@ function IntRegister() {
             }
             else if (result.data.status=="error")
             {
+              console.log(result)
               toast.error("Email is already used")
             }
             else
@@ -129,7 +130,7 @@ function IntRegister() {
     switch(name)
     {
         case 'FirstName':
-          const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.FirstName);
+          //const isValidInput = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.FirstName);
           if(FormIntData.FirstName=="")
           {
             setErrFirstName("First Name Cannot Be Blank")
@@ -137,25 +138,19 @@ function IntRegister() {
           else if(FormIntData.FirstName.length<4 &&FormIntData.FirstName.length<19){
           setErrFirstName("Name should not less than 4 and not greater than 19")
           }
-          else if(!isValidInput){
-            setErrFirstName("Name cannot be number or special symbols")
-          }
           else{
             setErrFirstName("")
           }
         break;
 
         case 'LastName':
-          const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.LastName);
+          //const isValidLastName = /\b([A-ZÀ-ÿ][-,a-z. ']+[ ]*)+/.test(FormIntData.LastName);
           if(FormIntData.LastName=="")
           {
             setErrLastName("Last Name Cannot Be Blank")
           }
           else if(FormIntData.LastName.length<4 &&FormIntData.LastName.length<19){
             setErrLastName("Name should not less than 4 and not greater than 19")
-          }
-          else if(!isValidLastName){
-            setErrLastName("Name cannot be number or special symbols")
           }
           else{
             setErrLastName("")
@@ -264,12 +259,12 @@ function IntRegister() {
           break;
 
           case 'CompanyPosition':
-          if(FormIntData.CompanyPosition=="")
+          if(FormIntData.CompanyPosition.length==0)
           {
             setErrCompany("CompanyPosition Cannot Be Blank")
           }
           else{
-            setErrGender("")
+            setErrCompany("")
           }
           break;
 
@@ -308,7 +303,7 @@ function IntRegister() {
                   name="FirstName" 
                   onChange={OnTextChange}
                   onBlur={validateField}
-                  minlength="4"
+                  minlength="2"
                   maxlength="18"
                   required>
                   </input>
@@ -323,7 +318,7 @@ function IntRegister() {
                   type="text" 
                   value={FormIntData.LastName}
                   name="LastName" 
-                  minlength="4"
+                  minlength="2"
                   maxlength="18"
                   required
                   onBlur={validateField}

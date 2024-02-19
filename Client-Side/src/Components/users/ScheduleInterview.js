@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
+import {toast}from "react-toastify"
 
 //import "../css/ScheduleInterview.css"
 
@@ -16,14 +17,10 @@ function ScheduleInterview() {
     const [scheduled,setScheduled] = useState([])
     const [FormData,setFormData] = useState({Date:"",Title:"",InterviewerSelection:""})
      const [title,setTitle] = useState("")
+     const [skillName,setSkillname]= useState("")
     //const [selectinterviewer,setselectedinterviewer] = useState("")
 
     useEffect(() => {
-       
-        axios.get("http://localhost:9997/interview/allInterviewer", { headers })
-            .then(res => setInterviewers(res.data.result))
-            .catch(err => console.log(err));
-            
             // axios.get("http://localhost:9997/interview/getmyinterviews", { headers })
             // .then(res =>console.log(res.data))
             // .catch(err => console.log(err));
@@ -36,11 +33,6 @@ function ScheduleInterview() {
       axios.get("http://127.0.0.1:9997/interviewer/getallskills", { headers })
           .then(res => setTitle(res.data.result))
           .catch(err => console.log(err));
-          
-          // axios.get("http://localhost:9997/interview/getmyinterviews", { headers })
-          // .then(res =>console.log(res.data))
-          // .catch(err => console.log(err));
-          
   }, []);
 
     useEffect(() => {
@@ -56,7 +48,7 @@ function ScheduleInterview() {
             if(result.data.status=="success")
             {
                 const arr =result.data.result
-                //console.log(arr)
+                console.log(arr)
                 setScheduled(arr)
                 //console.log(arr)
             }
@@ -73,11 +65,20 @@ function ScheduleInterview() {
             
     }, []);
    
+    const getInterviewerBySkill=(id)=>{
+      const url = `http://localhost:9997/interview/getinterviewerbyskill/${id}`
+      axios.get(url,{ headers })
+            .then(res => setInterviewers(res.data.result))
+            .catch(err => console.log(err));
+    }
+
     
     const OnTextChange = (args)=>{
         var inputDataCopy = {...FormData};
         inputDataCopy[args.target.name]=args.target.value
-        //console.log(inputDataCopy)
+        console.log(inputDataCopy.Title)
+        getInterviewerBySkill(inputDataCopy.Title)
+
        // console.log(inputDataCopy)
         setFormData(inputDataCopy)
     }
@@ -98,43 +99,45 @@ function ScheduleInterview() {
         alert("All Field is mandatory")
     }
     else{
-      e.preventDefault();
+     // e.preventDefault();
         console.log(FormData)
-    //     const sqlFormattedDate = FormData.Date.toJSON().slice(0, 19).replace("T", " ");
-    //     const data = getCurrentUserid()
-    //     const headers = myheaders();
-    //     const requestBody = {
-    //         Date:sqlFormattedDate,
-    //         Title: FormData.Title,
-    //         Interviewerid: FormData.InterviewerSelection,
-    //         Userid:data
-    //       };
-    //     const url ="http://localhost:9997/interview/setInteview" ;
-    //       console.log(requestBody)
-    //     try{
-    //         axios.post(url,requestBody ,{ headers })
-    //          .then((result)=>{
-    //             //console.log(result.data);
-    //             //console.log(result.data.status);
-    //             if(result.data.status=="success")
-    //             {
-    //               alert("Interview scheduled ..")
-    //             }
-    //             else if (result.data.status=="error")
-    //             {
-    //               alert("Some Problem Occured")
-    //             }
-    //             else
-    //             {
-    //               alert("Something went wrong")
-    //             }
-    //       })
-    //         .catch(err => console.log(err));
-    //     }catch(ex)
-    //     {
-    //         alert("Something went wrong")
-    //         console.log(ex)
-    //     }
+        const sqlFormattedDate = FormData.Date.toJSON().slice(0, 19).replace("T", " ");
+        const data = getCurrentUserid()
+       const headers = myheaders();
+        const requestBody = {
+             Date:sqlFormattedDate,
+             Title: FormData.Title,
+             Interviewerid: FormData.InterviewerSelection,
+             Userid:data
+           };
+         const url ="http://localhost:9997/interview/setInteview" ;
+          // console.log(requestBody)
+        try{
+            axios.post(url,requestBody ,{ headers })
+             .then((result)=>{
+                //console.log(result.data);
+                //console.log(result.data.status);
+                if(result.data.status=="success")
+                {
+                  toast.success("Interview Sceduled")
+                }
+                else if (result.data.status=="error")
+                {
+                  toast.error("Some Problem Occured")
+                 // alert("Some Problem Occured")
+                }
+                else
+                {
+                  toast.error("Something went wrong")
+                //  alert("Something went wrong")
+                }
+          })
+            .catch(err => console.log(err));
+        }catch(ex)
+        {
+            alert("Something went wrong")
+            console.log(ex)
+        }
   
     }
     
@@ -166,15 +169,23 @@ function ScheduleInterview() {
       };
 
       const renderTitles = () => {
-        return title.map(item => (
-                <option value={item.skillid} key={item.skillid}>{item.skill}</option>       
-        ));
+        //console.log(Array.isArray(title))
+        if (Array.isArray(title)) {
+          
+          return title.map(item => (
+            <option value={item.skillid} key={item.skillid}>{item.skill}</option>
+          ));
+        } else {
+          // Handle the case where title is not an array, e.g., show an error message
+          return <option value="">Error: Skills not available</option>;
+        }
       };
 
       const renderSceduled = () => {
-        return scheduled.map(item => (
+        return scheduled.map( item => (
+    
             <div class="icard" key={item.Interviewid}>
-              <p> Title:-<strong>{item.Title}</strong></p>
+              <p> Title:<strong>{item.Title}</strong></p>
               <p>Date:-{item.Date && DobChangeWithTime(item.Date)}</p>
               <p style={getStatusStyle(item)}>{item.Status}</p>
               {item.Status == 'approved' && <button className="btn btn-success">Join</button>}
@@ -204,7 +215,7 @@ function ScheduleInterview() {
         
         {/* card for viewing interview sceduled and approved or not */}
         <div className="card-container">
-            {scheduled.length>0&& renderSceduled()}
+            {scheduled.length>0&&renderSceduled()}
         </div>
         <form className="container" onSubmit={handleSave}>
         <div className="container-form">
@@ -236,7 +247,7 @@ function ScheduleInterview() {
                         value={title.skillid}
                         onChange={OnTextChange}>
                     <option  selected>Choose...</option>
-                    {interviewers.length > 0 && renderTitles()}
+                    {renderTitles()}
                 </select>
             </div>
         </div>

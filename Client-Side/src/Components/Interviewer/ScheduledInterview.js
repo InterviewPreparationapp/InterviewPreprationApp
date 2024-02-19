@@ -6,6 +6,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { myheaders, getCurrentUserid,DobChangeWithTime } from "../routes/auth";
 import {toast} from 'react-toastify'
+import myimage from "../images/backgound.jpg"
+
 function ScheduledInterview() {
   const [interviewers, setInterviewers] = useState([]);
   const [UserDetail, setUserDetail] = useState();
@@ -126,8 +128,7 @@ function ScheduledInterview() {
   return (
     <>
       <Navbar />
-      <h3>GetInterviewers</h3>
-     
+      
       <div className="card-container">
       
         {renderInterviewers()}

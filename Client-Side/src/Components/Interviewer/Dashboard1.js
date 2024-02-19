@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 
-import interviewer1Img from "../images/Interviewer1.avif"; 
+import interviewer1Img from "../images/Interviewer1.avif";
 import interviewer2Img from "../images/Interviewer2.jpeg";
 import interviewer3Img from "../images/Interviewer3.jpeg";
 
@@ -11,7 +11,6 @@ import "../css/Dashboard1.css";
 function Dashboard1() {
   const [isChecked, setChecked] = useState(false);
 
-<<<<<<< HEAD
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
@@ -20,19 +19,9 @@ function Dashboard1() {
     <>
       <Navbar />
       <strong>
-      <h1 style={{ textAlign: "center" , fontFamily: "fantasy",}} >Interviewers Dashboard</h1>
+        <h1 style={{ textAlign: "center", fontFamily: "fantasy", }} >Interviewers Dashboard</h1>
       </strong>
-      {}
-      <label style={{ marginLeft: "10px" }}>
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-        />
-        {isChecked ? 'Checked Label' : 'Unchecked Label'}
-      </label>
 
-      {}
       <div className="interviewer-container">
         {/* Interviewer 1 */}
         <div className="interviewer-card">
@@ -79,32 +68,25 @@ function Dashboard1() {
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div>
-<center>
-      <h4> Our  interviewers can provide valuable insights and help you tailor your responses effectively. 
-        Our app provides key information about your interviewers, including their backgrounds, roles within the company, and any shared connections or interests.
-         Armed with this knowledge, you can establish rapport more easily, anticipate their expectations, and showcase your qualifications in a way that resonates with their perspectives. 
-         Take advantage of this feature to make a memorable impression and increase your chances of interview success.</h4>
-        
-        <hr/>
-        <strong>
-         <p>
-         Moreover, our app provides tips and strategies for engaging with different types of interviewers, whether they prefer a more structured approach or value creative problem-solving. By understanding their roles within the company and their potential influence on the hiring decision, you can tailor your responses to address their specific concerns and priorities.
-         </p>
-         </strong>  
-        
-         </center>
-         </div>
-=======
-  
-    return (
-    <>
-    <Navbar/>
-        
->>>>>>> fbe07634 (on working interviewer skills)
+        <center>
+          <h4> Our  interviewers can provide valuable insights and help you tailor your responses effectively.
+            Our app provides key information about your interviewers, including their backgrounds, roles within the company, and any shared connections or interests.
+            Armed with this knowledge, you can establish rapport more easily, anticipate their expectations, and showcase your qualifications in a way that resonates with their perspectives.
+            Take advantage of this feature to make a memorable impression and increase your chances of interview success.</h4>
+
+          <hr />
+          <strong>
+            <p>
+              Moreover, our app provides tips and strategies for engaging with different types of interviewers, whether they prefer a more structured approach or value creative problem-solving. By understanding their roles within the company and their potential influence on the hiring decision, you can tailor your responses to address their specific concerns and priorities.
+            </p>
+          </strong>
+
+        </center>
+      </div>
     </>
-    
+
   );
 }
 

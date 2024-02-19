@@ -53,11 +53,14 @@
 .button:hover {
   background-color: #0056b3;
 }
+
 /* Custom CSS for styling the checkbox container */
 .checkbox-container {
   display: flex;
-  align-items: center; /* Center items vertically */
-  margin-bottom: 10px; /* Add margin at the bottom for spacing */
+  align-items: center;
+  /* Center items vertically */
+  margin-bottom: 10px;
+  /* Add margin at the bottom for spacing */
 }
 
 /* Custom CSS for styling checkboxes */
@@ -70,7 +73,8 @@
   border: 2px solid #999;
   border-radius: 5px;
   cursor: pointer;
-  margin-right: 8px; /* Add margin between checkboxes */
+  margin-right: 8px;
+  /* Add margin between checkboxes */
 }
 
 .custom-checkbox:checked {

@@ -18,7 +18,7 @@ function Dashboard() {
     return (
         <>
             <Navbar />
-            <h2>Interview Preparation</h2>
+            
             <div className="dashboard-content">
             
                 {/* Add your dashboard content here */}

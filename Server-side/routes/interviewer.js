@@ -209,7 +209,19 @@ app.delete("/delete/:id",(request,response)=>{
 app.get("/InterviewSceduled/:id",(request,response)=>{
     const id = request.params.id;
     var connection = mysql.createConnection(ConnectionDetails);
-    var statement =`select Interviewid,Date,Title,Userid,Status from InterviewSceduled where Interviewerid=${id} `;
+    var statement =`SELECT 
+    InterviewSceduled.Interviewid,
+    InterviewSceduled.Date,
+    Skills.skill AS Title,
+    InterviewSceduled.Interviewerid,
+    InterviewSceduled.Userid,
+    InterviewSceduled.Status
+FROM 
+    InterviewSceduled
+JOIN 
+    Skills ON InterviewSceduled.Title = Skills.skillid
+WHERE 
+    InterviewSceduled.Interviewerid = ${id};`;;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
@@ -288,9 +300,9 @@ app.patch("/updatestatus/:id",(request,response)=>{
         })
 })
 
-app.delete("/deletescheduled/:id",(request,response)=>{
+// app.delete("/deletescheduled/:id",(request,response)=>{
 
-});
+// });
 
 //set feedback
 app.post("/setFeedback",(request,response)=>{
@@ -381,5 +393,69 @@ app.get("/getallskills",(request,response)=>{
 
     })
 });
+
+//get skill name by skill id
+app.get("/getskillname/:id",(request,response)=>{
+    const skillid = request.params.id
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement =`select skill from Skills where skillid =${skillid};`;
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(error));
+            connection.end();
+            response.end();
+    }
+
+    })
+});
+//interview skills update
+app.post("/interviewerskill",(request,response)=>{
+    if(request.body!=null){
+        const {interviewer_id,skillid}=request.body;
+        var connection = mysql.createConnection(ConnectionDetails);
+        var statement = `insert into InterviewerSkill(interviewer_id,skillid) values(${interviewer_id},${skillid})`;
+        connection.query(statement,(error,result)=>{
+            if(error==null)
+            {
+                response.setHeader("Content-type","application/json");
+                var reply = {
+                                "status":"success",
+                                "message":result
+                            }
+                response.write(JSON.stringify(reply));
+                connection.end();
+                response.end();
+            }
+            else{
+                response.setHeader("Content-type","application/json");
+                var reply = {
+                    "status":"error",
+                    "message":error
+                }
+                response.write(JSON.stringify(reply));
+                connection.end();
+                response.end();
+            }
+        })
+        }
+    else{
+        var reply ={
+            "message" :"Failed to getting data",
+            "data":"errror"
+        }
+    }
+        });
 
 module.exports= app;

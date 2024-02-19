@@ -18,7 +18,6 @@ function GetInterviewers() {
     const renderInterviewers = () => {
         return interviewers.map((interviewer) => (
             <div className="card" style={{ "width": "18rem", "margin": "10px" }} key={interviewer.Interviewerid}>
-                <img src="..." className="card-img-top" alt="..." />
                 <div className="card-body">
                     <h5 className="card-title">{interviewer.FirstName} {interviewer.LastName}</h5>
                 </div>
@@ -43,8 +42,6 @@ function GetInterviewers() {
             <center>
                  <Navbar />
 
-                <h3>GetInterviewers</h3>
-                <button onClick={() => console.log(interviewers)}>My interviewers button</button>
                 <div className="container">
                     {renderInterviewers()}
                 </div>
