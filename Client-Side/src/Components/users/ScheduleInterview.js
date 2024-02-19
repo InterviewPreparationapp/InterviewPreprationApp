@@ -5,20 +5,21 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
-import { Carousel, Card } from 'react-bootstrap';
+
 //import "../css/ScheduleInterview.css"
 
 
 function ScheduleInterview() {
+  const headers = myheaders();
+
     const [interviewers, setInterviewers] = useState([]);
     const [scheduled,setScheduled] = useState([])
     const [FormData,setFormData] = useState({Date:"",Title:"",InterviewerSelection:""})
-   // const [title,setTitle] = useState("")
+     const [title,setTitle] = useState("")
     //const [selectinterviewer,setselectedinterviewer] = useState("")
 
     useEffect(() => {
-        const headers = myheaders();
-
+       
         axios.get("http://localhost:9997/interview/allInterviewer", { headers })
             .then(res => setInterviewers(res.data.result))
             .catch(err => console.log(err));
@@ -28,6 +29,19 @@ function ScheduleInterview() {
             // .catch(err => console.log(err));
             
     }, []);
+
+
+    useEffect(() => {
+       
+      axios.get("http://127.0.0.1:9997/interviewer/getallskills", { headers })
+          .then(res => setTitle(res.data.result))
+          .catch(err => console.log(err));
+          
+          // axios.get("http://localhost:9997/interview/getmyinterviews", { headers })
+          // .then(res =>console.log(res.data))
+          // .catch(err => console.log(err));
+          
+  }, []);
 
     useEffect(() => {
         const token = myheaders();  
@@ -84,42 +98,43 @@ function ScheduleInterview() {
         alert("All Field is mandatory")
     }
     else{
-        //console.log(FormData)
-        const sqlFormattedDate = FormData.Date.toJSON().slice(0, 19).replace("T", " ");
-        const data = getCurrentUserid()
-        const headers = myheaders();
-        const requestBody = {
-            Date:sqlFormattedDate,
-            Title: FormData.Title,
-            Interviewerid: FormData.InterviewerSelection,
-            Userid:data
-          };
-        const url ="http://localhost:9997/interview/setInteview" ;
-          console.log(requestBody)
-        try{
-            axios.post(url,requestBody ,{ headers })
-             .then((result)=>{
-                //console.log(result.data);
-                //console.log(result.data.status);
-                if(result.data.status=="success")
-                {
-                  alert("Interview scheduled ..")
-                }
-                else if (result.data.status=="error")
-                {
-                  alert("Some Problem Occured")
-                }
-                else
-                {
-                  alert("Something went wrong")
-                }
-          })
-            .catch(err => console.log(err));
-        }catch(ex)
-        {
-            alert("Something went wrong")
-            console.log(ex)
-        }
+      e.preventDefault();
+        console.log(FormData)
+    //     const sqlFormattedDate = FormData.Date.toJSON().slice(0, 19).replace("T", " ");
+    //     const data = getCurrentUserid()
+    //     const headers = myheaders();
+    //     const requestBody = {
+    //         Date:sqlFormattedDate,
+    //         Title: FormData.Title,
+    //         Interviewerid: FormData.InterviewerSelection,
+    //         Userid:data
+    //       };
+    //     const url ="http://localhost:9997/interview/setInteview" ;
+    //       console.log(requestBody)
+    //     try{
+    //         axios.post(url,requestBody ,{ headers })
+    //          .then((result)=>{
+    //             //console.log(result.data);
+    //             //console.log(result.data.status);
+    //             if(result.data.status=="success")
+    //             {
+    //               alert("Interview scheduled ..")
+    //             }
+    //             else if (result.data.status=="error")
+    //             {
+    //               alert("Some Problem Occured")
+    //             }
+    //             else
+    //             {
+    //               alert("Something went wrong")
+    //             }
+    //       })
+    //         .catch(err => console.log(err));
+    //     }catch(ex)
+    //     {
+    //         alert("Something went wrong")
+    //         console.log(ex)
+    //     }
   
     }
     
@@ -149,6 +164,13 @@ function ScheduleInterview() {
                 <option value={item.Interviewerid} key={item.Interviewerid}>{item.FirstName} {item.LastName}</option>       
         ));
       };
+
+      const renderTitles = () => {
+        return title.map(item => (
+                <option value={item.skillid} key={item.skillid}>{item.skill}</option>       
+        ));
+      };
+
       const renderSceduled = () => {
         return scheduled.map(item => (
             <div class="icard" key={item.Interviewid}>
@@ -203,19 +225,24 @@ function ScheduleInterview() {
             
             />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="title">Title:</label>
-          <input type="text"
-                id="title" 
-                name="Title" 
-                required value={FormData.Title}
-                 onChange={OnTextChange}/>
-        </div>
         
         <div className="form-group">
+        <label htmlFor="title">Title:</label>
                     <div class="input-group mb-3">
-            {/* <button class="btn btn-outline-secondary" type="button" onClick={navigating}>Goto</button> */}
+                <select class="form-select"
+                        name="Title"
+                        id="inputGroupSelect03"
+                        aria-label="Example select with button addon"
+                        value={title.skillid}
+                        onChange={OnTextChange}>
+                    <option  selected>Choose...</option>
+                    {interviewers.length > 0 && renderTitles()}
+                </select>
+            </div>
+        </div>
+
+        <div className="form-group">
+                    <div class="input-group mb-3">
                 <select class="form-select"
                         name="InterviewerSelection"
                         id="inputGroupSelect03"

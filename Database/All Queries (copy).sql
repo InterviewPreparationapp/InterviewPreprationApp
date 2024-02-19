@@ -72,4 +72,13 @@ Insert Into InterviewerSkills (skill) values('Open Source Contribution');
 
 ALTER TABLE InterviewerSkills RENAME TO Skills;
 
+Alter table InterviewSceduled modify column Title int(4);
+
+CREATE TABLE InterviewerSkill (
+    interviewer_id INT(4),
+    skillid INT(4),
+    FOREIGN KEY (interviewer_id) REFERENCES Interviewers(Interviewerid) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (skillid) REFERENCES Skills(skillid) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 

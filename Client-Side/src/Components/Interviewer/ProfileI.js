@@ -1,5 +1,5 @@
 import Navbar from "./Navbar";
-
+import Select from "react-select"
 import React, { useEffect,useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../css/UserProfile.css";
@@ -13,7 +13,9 @@ function ProfileI() {
     const [image,setImage] = useState("")
     const userid = getCurrentUserid()
     const [editMode, setEditMode] = useState(false); 
-    const [datachanged, setDatachanged] = useState(false); 
+    const [datachanged, setDatachanged] = useState(false);
+    const [value,setValue] = useState(null)
+
     useEffect(()=>{
       GetUserData(userid);
     },[])
@@ -123,10 +125,17 @@ function ProfileI() {
     
     } 
 
+    const options={
+     {value:"Data Structure", label:"Data Structure"}
+
+
+    }
+
+
     return (
         <>
           <Navbar/>
-          <div className="profile-container">
+          <div className="profile-container" style={{backgroundColor:"grey"}}>
             <div className="profile-header">
               <h2>User Profile</h2>
             </div>
@@ -214,7 +223,10 @@ function ProfileI() {
             </div>
             </div>
           </div>
-          
+         <Select 
+         options={options}
+         />
+
         </>
       );
 }

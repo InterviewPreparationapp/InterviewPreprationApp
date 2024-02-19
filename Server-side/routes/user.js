@@ -43,7 +43,7 @@ app.post("/register",upload.single('Image'),(request,response)=>{
         if(request.file)
              Path = request.file.path
 
-        console.log(request.body);
+       // console.log(request.body);
         const {FirstName,LastName,Email,Password,Mobile,Address,Dob,Qualification,Gender} = request.body;
         
        var connection = mysql.createConnection(ConnectionDetails);

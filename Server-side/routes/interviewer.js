@@ -356,5 +356,30 @@ app.get("/getAllSubjectsTypes",(request,response)=>{
     })
 });
 
+//get all skills
+app.get("/getallskills",(request,response)=>{
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement =`select skillid,skill from Skills;`;
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            var reply = {
+                            "status":"success",
+                            "result":result
+                        }
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+            response.setHeader("Content-type","application/json");
+            response.write(JSON.stringify(error));
+            connection.end();
+            response.end();
+    }
+
+    })
+});
 
 module.exports= app;

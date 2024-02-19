@@ -53,3 +53,37 @@
 .button:hover {
   background-color: #0056b3;
 }
+/* Custom CSS for styling the checkbox container */
+.checkbox-container {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-bottom: 10px; /* Add margin at the bottom for spacing */
+}
+
+/* Custom CSS for styling checkboxes */
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #999;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px; /* Add margin between checkboxes */
+}
+
+.custom-checkbox:checked {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.custom-checkbox:checked::before {
+  content: '\2713';
+  font-size: 16px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

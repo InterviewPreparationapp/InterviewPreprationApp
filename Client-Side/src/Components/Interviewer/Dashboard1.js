@@ -11,6 +11,7 @@ import "../css/Dashboard1.css";
 function Dashboard1() {
   const [isChecked, setChecked] = useState(false);
 
+<<<<<<< HEAD
   const handleCheckboxChange = () => {
     setChecked(!isChecked);
   };
@@ -95,6 +96,13 @@ function Dashboard1() {
         
          </center>
          </div>
+=======
+  
+    return (
+    <>
+    <Navbar/>
+        
+>>>>>>> fbe07634 (on working interviewer skills)
     </>
     
   );
