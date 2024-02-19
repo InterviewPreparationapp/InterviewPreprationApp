@@ -26,7 +26,7 @@ const GetUserData=(id)=>
   try{
     axios.get(url,{headers})
     .then((res)=>{
-     // console.log(res.data.result[0].Profile)
+     console.log(res.data.result[0])
     
       const data = res.data.result[0];
       setUserData(data)
