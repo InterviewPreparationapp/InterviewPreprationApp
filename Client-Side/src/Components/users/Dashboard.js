@@ -39,15 +39,16 @@ function Dashboard() {
                      Interviews are mainly divided into four rounds;-
                     <br/>
                     <br/>
-                    <p>
-                    Technical Interview
+                    <ul>
+                     
+                    <li>Technical Interview</li>
                     <br/>
-                    HR Interview    
+                    <li>HR Interview </li>   
                     <br/>
-                    Managerial Interview
+                   <li>Managerial Interview</li>
                     <br/>
-                    Group Discussion
-                    </p>
+                    <li>Group Discussion</li>
+                    </ul>
                     On this page, you will find complete information and details about all of the interview rounds, and more.
                     </p>
                 </div>

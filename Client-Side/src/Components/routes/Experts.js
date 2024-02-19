@@ -1,9 +1,9 @@
 import Navbar from "../Navbar"
 import Footer from "../Footer";
 import "../css/Experts.css"
-import Expert1Image from '../images/Expert1.jpg'; // Import image for Expert 1
-import Expert2Image from '../images/Expert2.jpg'; // Import image for Expert 2
-import Expert3Image from '../images/Expert3.jpg'; 
+import Expert1Image from '../images/e1.jpg'; // Import image for Expert 1
+import Expert2Image from '../images/e2.jpg'; // Import image for Expert 2
+import Expert3Image from '../images/e3.jpg'; 
 import { Link } from "react-router-dom";
 
 function Experts
