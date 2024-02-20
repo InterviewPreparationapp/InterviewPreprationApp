@@ -16,6 +16,7 @@ function Contact() {
     return (  
         <>
             <Navbar/>
+            <h1>Contavt Us</h1>
             <div className="contact-container">
             <center>
             <h3 style={{"font-family": "Protest Riot, sans-serif",color: "#325b5d",textAlign:"center", padding:"20px"}}>Contact Us</h3>

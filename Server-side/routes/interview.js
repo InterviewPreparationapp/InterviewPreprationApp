@@ -212,20 +212,12 @@ app.get("/getfeedback", (request, response) => {
 
 //fetch all interiviews
 
-<<<<<<< HEAD
 app.get("/fetchAllInterviews",(request,response)=>{ 
     var connection  = mysql.createConnection(ConnectionDetails);
     var statement = `SELECT Interviewid,Date,Title,Status,Interviewers.FirstName as Interviewer,Users.FirstName as User  FROM InterviewSceduled,Interviewers,Users where InterviewSceduled.Interviewerid=Interviewers.Interviewerid and InterviewSceduled.Userid=Users.Userid`;
     connection.query(statement,(error,result)=>{
         if(error==null)
         {
-=======
-app.get("/fetchAllInterviews", (request, response) => {
-    var connection = mysql.createConnection(ConnectionDetails);
-    var statement = `SELECT Interviewid,Date,Title,Interviewers.FirstName as Interviewer,Users.FirstName as User  FROM InterviewSceduled,Interviewers,Users where InterviewSceduled.Interviewerid=Interviewers.Interviewerid and InterviewSceduled.Userid=Users.Userid`;
-    connection.query(statement, (error, result) => {
-        if (error == null) {
->>>>>>> d2008e06 (data)
             var reply = {
                 "status": "success",
                 "result": result

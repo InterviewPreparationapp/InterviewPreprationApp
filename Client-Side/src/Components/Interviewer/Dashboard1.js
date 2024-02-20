@@ -2,16 +2,16 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 
-<<<<<<< HEAD
-import interviewer1Img from "../images/Interviewer1.avif";
-import interviewer2Img from "../images/Interviewer2.jpeg";
-import interviewer3Img from "../images/Interviewer3.jpeg";
 
-=======
+// import interviewer1Img from "../images/Interviewer1.avif";
+// import interviewer2Img from "../images/Interviewer2.jpeg";
+// import interviewer3Img from "../images/Interviewer3.jpeg";
+
+
 import interviewer1Img from "../images/i1.jpg"; 
 import interviewer2Img from "../images/i2.jpg";
 import interviewer3Img from "../images/i3.jpg";
->>>>>>> 48abbe01 (updated)
+
 import "../css/Dashboard1.css";
 
 function Dashboard1() {

@@ -6,7 +6,10 @@ function About() {
     return ( 
         <>
         <Navbar/>
-        <h3 style={{"font-family": "Protest Riot, sans-serif",color: "#325b5d",textAlign:"center", padding:"20px"}}>About Us</h3>
+        <br/><br/>
+        {/* <br/>
+        <h1>About Us</h1> */}
+        <h2 style={{"font-family": "Protest Riot, sans-serif",color: "#325b5d",textAlign:"center", padding:"10px"}}>About Us</h2>
         <div className="container" id="About Us">
       <div className="left-image">
         <img src={img1} alt="Left Image" />
