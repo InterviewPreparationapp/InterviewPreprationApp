@@ -34,48 +34,6 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
--- -----------------------------------------------------
--- Table `InterviewApp`.`SubjectsTypes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InterviewApp`.`SubjectsTypes` (
-  `Subjectid` INT NOT NULL AUTO_INCREMENT,
-  `Subjects` TEXT NULL DEFAULT NULL,
-  `Title` TEXT NULL DEFAULT NULL,
-  `EmptyCol1` INT NULL DEFAULT NULL,
-  `EmptyCol2` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol3` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol4` VARCHAR(30) NULL DEFAULT NULL,
-  `EmptyCol5` TINYINT NULL DEFAULT NULL,
-  PRIMARY KEY (`Subjectid`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 37
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `InterviewApp`.`DemoQuestions`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InterviewApp`.`DemoQuestions` (
-  `Questionid` INT NOT NULL AUTO_INCREMENT,
-  `Question` TEXT NULL DEFAULT NULL,
-  `Answer` TEXT NULL DEFAULT NULL,
-  `Skillid` INT NULL DEFAULT NULL,
-  `EmptyCol1` INT NULL DEFAULT NULL,
-  `EmptyCol2` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol3` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol4` VARCHAR(30) NULL DEFAULT NULL,
-  `EmptyCol5` TINYINT NULL DEFAULT NULL,
-  PRIMARY KEY (`Questionid`),
-  INDEX `fk_subjectid_idx` (`Subjectid` ASC) VISIBLE,
-  CONSTRAINT `fk_subjectid`
-    FOREIGN KEY (`Subjectid`)
-    REFERENCES `InterviewApp`.`SubjectsTypes` (`Subjectid`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 8
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
 
 -- -----------------------------------------------------
 -- Table `InterviewApp`.`Interviewers`
@@ -215,30 +173,7 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
--- -----------------------------------------------------
--- Table `InterviewApp`.`Sessions`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InterviewApp`.`Sessions` (
-  `id` INT NOT NULL,
-  `SessionToken` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol1` INT NULL DEFAULT NULL,
-  `EmptyCol2` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol3` VARCHAR(45) NULL DEFAULT NULL,
-  `EmptyCol4` VARCHAR(30) NULL DEFAULT NULL,
-  `EmptyCol5` TINYINT NULL DEFAULT NULL,
-  INDEX `Admin_key_idx` (`id` ASC) VISIBLE,
-  CONSTRAINT `Admin_key`
-    FOREIGN KEY (`id`)
-    REFERENCES `InterviewApp`.`Admin` (`Adminid`),
-  CONSTRAINT `Interviewer_key`
-    FOREIGN KEY (`id`)
-    REFERENCES `InterviewApp`.`Interviewers` (`Interviewerid`),
-  CONSTRAINT `User_key`
-    FOREIGN KEY (`id`)
-    REFERENCES `InterviewApp`.`Users` (`Userid`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
