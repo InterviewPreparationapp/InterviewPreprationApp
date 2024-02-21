@@ -33,6 +33,7 @@ const DemoQuestion = () => {
   const handleSubjectChange = (event) => {
     const selectedSubject = event.target.value;
     setSubject(selectedSubject);
+    console.log(selectedSubject)
     setDemoQuestions([]); // Reset demoQuestions when a new subject is selected
     setError(''); // Clear any previous error messages
   };
@@ -41,7 +42,7 @@ const DemoQuestion = () => {
   const handleSearch = () => {
     const token = myheaders()
     if (!subject) {
-        setDemoQuestions(null)
+        setDemoQuestions("")
         setError('Please select a subject');
         return;
     }
@@ -49,7 +50,8 @@ const DemoQuestion = () => {
     axios.get(`http://127.0.0.1:9997/admin/demoquestions?subject=${subject}`, { headers: token })
         .then(response => {
             if (response.data.status === "success") {
-                setDemoQuestions(response.data.result || []);
+              console.log(response.data.result)
+                //setDemoQuestions(response.data.result);
                 setError('');
             } else {
               setError('No demo questions found for the selected subject');

@@ -78,14 +78,7 @@ function App() {
                         <Route path="/ourexperts/register" element={<IntRegister/>}/>
                         <Route path="/ourexperts/login" element={<IntLogin/>}/>
 
-
-                        
-                        {/* <Route path="/admin/YWRtaW4yMDIz"  element={</>}> */}
-
-                        <Route path ="/QWRtaW4=" element={<Adminlogin/>}/>
-
                  <Route path ="/QWRtaW4=" element={<Adminlogin/>}/>
-
                     <Route path="QWRtaW4=/login" element={<PrivateRoute/>}>
                        <Route path="dashboard" element={<DashboardA/>}/>
                        <Route path="allusers" element={<AllUsers/>}/>
@@ -93,11 +86,6 @@ function App() {
                        <Route path="demoquestion" element={<DemoQuestionA/>}/>
                        <Route path="profiles" element={<ProfileA/>}/>
                         </Route>
-
-
-                    
-
-
                         
                 <Route path="/QWRtaW4=/login/demoquestion" element={<PrivateRoute/>}>
                     <Route path="allquestions" element={<AllQuestions/>}/>
