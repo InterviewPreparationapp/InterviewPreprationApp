@@ -9,9 +9,9 @@ function AllSubjects() {
     useEffect(() => {
         const headers = myheaders();
 
-        axios.get("http://127.0.0.1:9997/admin/getsubjectstypes", { headers })
-            .then(res => setSubjectTypes(res.data.result))
-            .catch(err => console.log(err));
+        axios.get("http://127.0.0.1:9997/interviewer/getallskills", { headers })
+    .then(res => setSubjectTypes(res.data.result))
+    .catch(err => console.log(err));
     }, []);
 
     const deleteUser = async (id) => {
@@ -41,13 +41,11 @@ function AllSubjects() {
     };
     const renderSubjectTypes = () => {
         return subjectTypes.map((subject) => (
-            <div className="card" style={{ "width": "18rem", "margin": "10px", "marginTop":"30px" }} key={subject.Subjectid}>
+            <div className="icard" style={{ "width": "18rem", "margin": "10px", "marginTop":"30px" }} key={subject.Subjectid}>
             <div className="card-body">
-                <h5 className="card-title">Title:{subject.Title} </h5>
+                <h5 className="card-title">Subject :<strong>{subject.skill}</strong> </h5>
             </div>
-            <ul className="list-group list-group-flush">
-                <li className="list-group-item">Subjects:{subject.Subjects}</li>
-            </ul>
+
             <div className="card-body">
                 <button onClick={() => deleteUser(subject.Subjectid)}>Delete</button>
             </div>
@@ -56,10 +54,8 @@ function AllSubjects() {
 };
     return ( <>
     <DashboardNavbar/>
-            <div className="container" style={{paddingTop:"65%"}}>
-                <div className="row">
+            <div className="card-container">
                     {renderSubjectTypes()}
-                </div>
             </div>
         
     </> );

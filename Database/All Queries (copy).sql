@@ -82,3 +82,25 @@ CREATE TABLE InterviewerSkill (
 );
 
 
+CREATE TABLE IF NOT EXISTS `InterviewApp`.`QuestionsForUsers` (
+  `Questionid` INT NOT NULL AUTO_INCREMENT,
+  `Question` TEXT NULL DEFAULT NULL,
+  `Answer` TEXT NULL DEFAULT NULL,
+  `skillid` INT NULL DEFAULT NULL,
+  `EmptyCol1` INT NULL DEFAULT NULL,
+  `EmptyCol2` VARCHAR(45) NULL DEFAULT NULL,
+  `EmptyCol3` VARCHAR(45) NULL DEFAULT NULL,
+  `EmptyCol4` VARCHAR(30) NULL DEFAULT NULL,
+  PRIMARY KEY (`Questionid`),
+  INDEX `fk_subjectid_idx` (`skillid` ASC) VISIBLE,
+  CONSTRAINT `fk_skillid`
+    FOREIGN KEY (`skillid`)
+    REFERENCES `InterviewApp`.`Skills` (`skillid`) ON DELETE CASCADE ON UPDATE CASCADE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 8
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+
+

@@ -413,11 +413,69 @@ app.get("/admin",(request,response)=>{
     })
 });
 
+//Questions for Users --------------------------------
 
+//adding demo questions
+app.post("/addQuestion",(request,response)=>{
+    const {Question,Answer,skillid}=request.body;
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement = `INSERT INTO QuestionsForUsers (Question, Answer,skillid) values ("${Question}","${Answer}",${skillid});`;
+    console.log(statement)
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            response.setHeader("Content-type","application/json");
+            var reply = {
+                            "status":"success",
+                            "message":result
+                        }
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+            response.setHeader("Content-type","application/json");
+            var reply = {
+                "status":"error",
+                "message":error
+            }
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+    })
+})
 
-
-
-
+//getting all demoquestion
+app.get("/Question/:id",(request,response)=>{
+    const skillid=request.params.id;
+    var connection = mysql.createConnection(ConnectionDetails);
+    var statement = `select Questionid,Question,Answer,skillid from QuestionsForUsers where skillid =${skillid};`;
+   // console.log(statement)
+    connection.query(statement,(error,result)=>{
+        if(error==null)
+        {
+            response.setHeader("Content-type","application/json");
+            var reply = {
+                            "status":"success",
+                            "message":result
+                        }
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+        else{
+            response.setHeader("Content-type","application/json");
+            var reply = {
+                "status":"error",
+                "message":error
+            }
+            response.write(JSON.stringify(reply));
+            connection.end();
+            response.end();
+        }
+    })
+})
 
 
 

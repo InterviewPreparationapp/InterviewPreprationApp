@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { myheaders } from '../routes/auth';
 import Navbar from './Navbar1';
+import { toast } from 'react-toastify';
 
 
 
@@ -14,28 +15,27 @@ const DemoQuestion = () => {
 
   useEffect(() => {
     const token = myheaders()  
-    axios.get(`http://127.0.0.1:9997/admin/getsubjectstypes`, {headers:token})
+    axios.get(`http://127.0.0.1:9997/interviewer/getallskills`, {headers:token})
       .then(response => {
         if (response.data.status === "success"){
         setSubjects(response.data.result);
         setError('');
   }
   else {
-    setError('Error fetching demo questions');
+    toast.error("Can't Fetch Topics")
     setSubjects('');
   }
 })
       .catch(error => {
-        setError('Error fetching subjects');
+        toast.error("Something Went Wrong")
       });
   }, []);
 
   const handleSubjectChange = (event) => {
     const selectedSubject = event.target.value;
     setSubject(selectedSubject);
-    console.log(selectedSubject)
+   // console.log(selectedSubject)
     setDemoQuestions([]); // Reset demoQuestions when a new subject is selected
-    setError(''); // Clear any previous error messages
   };
 
   
@@ -43,23 +43,28 @@ const DemoQuestion = () => {
     const token = myheaders()
     if (!subject) {
         setDemoQuestions("")
-        setError('Please select a subject');
+        toast.warn("Please select a subject")
         return;
     }
-    
-    axios.get(`http://127.0.0.1:9997/admin/demoquestions?subject=${subject}`, { headers: token })
+    else{
+      //console.log(subject)
+      axios.get(`http://127.0.0.1:9997/admin/Question/${subject}`, { headers: token })
         .then(response => {
             if (response.data.status === "success") {
-                setDemoQuestions(response.data.result);
-                setError('');
-            } else {
-              setError('No demo questions found for the selected subject');
-            }
+             // console.log(response.data.message['length']==0)
+              if(response.data.message['length']==0)
+                toast.info("Questions Not Found")
+               
+                setDemoQuestions(response.data.message);
+                
+            } 
         })
         .catch(error => {
-            setError('Error fetching demo questions');
+          toast.error("Error fetching demo questions")
             setDemoQuestions([]);
         });
+    }
+    
 };
 
  // console.log('demoQuestions:', demoQuestions);
@@ -70,20 +75,26 @@ const DemoQuestion = () => {
       
       <select value={subject} onChange={handleSubjectChange}>
         <option value="">Select a subject</option>
-        {subjects && subjects.map(({Subjectid, Subjects, Title }) => (
-          <option key={Subjectid} value={Subjects}>{Subjects}</option>
+        {subjects && subjects.map(({skillid, skill }) => (
+          <option key={skillid} value={skillid}>{skill}</option>
         ))}
       </select>
       <button onClick={handleSearch}>Search</button>
      
-      {demoQuestions.length > 0 && (
+      {demoQuestions!=undefined &&demoQuestions.length > 0 && (
         <div>
           <h2>Demo Questions:</h2>
           <ul>
             {demoQuestions.map((demoQuestion, index) => (
               <li key={index}>
-                <p> {demoQuestion.Question}</p>
-                <p> {demoQuestion.Answer}</p>
+               
+                <div class=" shadow p-3 mb-5 bg-body-tertiary rounded fw-bold">{demoQuestion.Question}
+                <div class="p-3 mb-2 bg-success-subtle text-success-emphasis fw-semibold">
+                  {demoQuestion.Answer}
+                  </div>
+                </div>
+               
+                <br/>
               </li>
             ))}
           </ul>
@@ -91,6 +102,8 @@ const DemoQuestion = () => {
       )}
       {error && <p>{error}</p>}
     </div>
+
+    
   </>
   );
 };

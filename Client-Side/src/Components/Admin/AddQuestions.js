@@ -14,12 +14,13 @@ function AddQuestions() {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        
+        //setSubjects(res.data.result)
         const fetchSubjects = async () => {
             try {
                 const headers = myheaders();
-                const response = await axios.get("http://localhost:9997/admin/getsubjectstypes", { headers });
-                setSubjects(response.data.result);
+                axios.get("http://127.0.0.1:9997/interviewer/getallskills", { headers })
+                .then(res => setSubjects(res.data.result) )
+                .catch(err => console.log(err));
             } catch (error) {
                 console.error("Error fetching subjects:", error);
                 setError("Failed to fetch subjects");
@@ -32,22 +33,25 @@ function AddQuestions() {
         e.preventDefault();
         try {
             const headers = myheaders();
+            console.log("Questions:",question)
+            console.log("answer:",answer)
+            console.log("Title:",subjectId)   
             const response = await axios.post(
-                "http://localhost:9997/admin/addDemoQuestion",
-                { Question: question, Answer: answer, Subjectid: subjectId },
+                "http://localhost:9997/admin/addQuestion",
+                { Question: question, Answer: answer, skillid: subjectId },
                 { headers }
-            );
+           );
             if (response.data.status === "success") {
                 toast.success("Question added successfully");
                 setQuestion("");
                 setAnswer("");
                 setSubjectId("");
             } else {
-                setError("Failed to add question");
+                toast.error("something went wrong")
             }
         } catch (error) {
             console.error("Error adding question:", error);
-            setError("Something went wrong");
+            toast.error("something went wrong")
         }
     };
 
@@ -66,11 +70,11 @@ function AddQuestions() {
                 </div>
                 <div>
                     <label>Subject:</label>
-                    <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)} required>
+                    <select value={subjects.skillid} onChange={(e) => setSubjectId(e.target.value)} required>
                         <option value="">Select a subject</option>
                         {subjects.map((subject) => (
-                            <option key={subject.Subjectid} value={subject.Subjectid}>
-                                {subject.Subjects}
+                            <option key={subject.skillid} value={subject.skillid}>
+                                {subject.skill}
                             </option>
                         ))}
                     </select>

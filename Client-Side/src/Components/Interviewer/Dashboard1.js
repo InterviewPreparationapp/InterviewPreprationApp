@@ -2,16 +2,9 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
 
-
-// import interviewer1Img from "../images/Interviewer1.avif";
-// import interviewer2Img from "../images/Interviewer2.jpeg";
-// import interviewer3Img from "../images/Interviewer3.jpeg";
-
-
 import interviewer1Img from "../images/i1.jpg"; 
 import interviewer2Img from "../images/i2.jpg";
 import interviewer3Img from "../images/i3.jpg";
-
 import "../css/Dashboard1.css";
 
 function Dashboard1() {
