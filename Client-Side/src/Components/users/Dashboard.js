@@ -26,7 +26,7 @@ function Dashboard() {
                    
                    
                     <h2>Interview Preparation Dashboard</h2>
-                    <p>Prepare for a job with PrepInsta’s Interview Preparation dashboard. This page is a complete guide to prepare for job interview for freshers and experienced candidates. .</p>
+                    <p>Prepare for a job with  Interview Preparation dashboard. This page is a complete guide to prepare for job interview for freshers and experienced candidates. .</p>
                     <button className="button" onClick={()=>{navigate("/login/user/demoquestion")}}>Check Out Questions</button>
                 </div>
                 <div>
